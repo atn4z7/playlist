@@ -1,10 +1,16 @@
 import React from 'react'
-import { StyleSheet, StatusBar } from 'react-native'
+import { StyleSheet, StatusBar, Button } from 'react-native'
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
+      <Button
+        title="test"
+        onPress={() => {
+          navigation.navigate('AddSongs')
+        }}
+      />
     </>
   )
 }
