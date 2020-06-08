@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
+import { RootStackParamList } from 'types'
+import AddSongs from 'views/global/AddSongs'
 import HomeNavigator from '../HomeNavigator'
-import AddSongs from '../../views/global/AddSongs'
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<RootStackParamList>()
 
 const RootNavigator = () => {
   return (

@@ -6,7 +6,7 @@ import {
   Text,
   Button
 } from 'react-native'
-import { connect } from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 import { playlistsActions } from 'actions'
 import { songsSelectors } from 'selectors'
 

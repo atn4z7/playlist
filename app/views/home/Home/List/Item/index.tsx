@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Text from 'views/common/Text'
+import { HomeNavigationProps } from 'types'
+import { color } from 'styles'
 import styles, { ICON_SIZE } from './styles'
 
 type ItemProps = {
@@ -15,7 +17,7 @@ type ItemProps = {
 }
 
 const Item = ({ id, title, description, icon, colors }: ItemProps) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<HomeNavigationProps>()
 
   const goToPlaylist = (playlistId: string) => {
     navigation.navigate('Playlist', { playlistId })
@@ -24,7 +26,7 @@ const Item = ({ id, title, description, icon, colors }: ItemProps) => {
   const renderIcon = () => {
     return (
       <LinearGradient colors={colors} style={styles.iconBg}>
-        <MaterialIcons name={icon} size={ICON_SIZE} color="#fff" />
+        <MaterialIcons name={icon} size={ICON_SIZE} color={color.icon} />
       </LinearGradient>
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { color } from 'styles'
 import styles from './styles'
@@ -13,7 +13,7 @@ const Background = ({ colors, children }: BackgroundProps) => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={colors} style={styles.background} />
-      {children}
+      <SafeAreaView>{children}</SafeAreaView>
     </View>
   )
 }

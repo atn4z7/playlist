@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
 import { dimension } from 'styles'
 
-const PADDING_VERTICAL = dimension.fullHeight * 0.07
+const CONTAINER_MARGIN_RIGHT = dimension.fullWidth * 0.05
 
 export default StyleSheet.create({
   container: {
-    paddingVertical: PADDING_VERTICAL
+    marginRight: CONTAINER_MARGIN_RIGHT
   }
 })

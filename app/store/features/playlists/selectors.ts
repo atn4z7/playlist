@@ -11,9 +11,9 @@ export const getPlaylists = (state: StoreState): Array<PlayList> => {
   )
 }
 
-export const getSongIdsOfPlaylist = (
+export const getPlaylist = (
   state: StoreState,
   playlistId: string
-): Array<string> => {
-  return get(state, `playlists.byId.${playlistId}.songIds`, emptyArr)
+): PlayList => {
+  return get(state, `playlists.byId.${playlistId}`, emptyObj)
 }

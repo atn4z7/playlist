@@ -1,60 +1,64 @@
-import React, { useLayoutEffect, useEffect } from 'react'
-import {
-  StyleSheet,
-  StatusBar,
-  TouchableOpacity,
-  Text,
-  Button
-} from 'react-native'
-import { connect } from 'react-redux'
-import { songsActions } from 'actions'
+import React, { useLayoutEffect } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 import { playlistsSelectors, songsSelectors } from 'selectors'
+import Background from 'views/common/Background'
+import TextButton from 'views/common/TextButton'
+import Header from 'views/common/Header'
+import { color } from 'styles'
+import { StoreState, PlaylistSceneProps } from 'types'
+import List from './List'
 
-const { getSongIdsOfPlaylist } = playlistsSelectors
+const { getPlaylist } = playlistsSelectors
 const { getSongsWithIds } = songsSelectors
 
-const Playlist = ({ navigation, playlistId, songs }) => {
+type PlaylistProps = PropsFromRedux & PlaylistSceneProps
+
+const Playlist = ({
+  navigation,
+  playlistId,
+  name,
+  songs,
+  colors
+}: PlaylistProps) => {
   useLayoutEffect(() => {
-    console.log('useLayoutEffect')
     const goToAddSongs = () => {
       navigation.navigate('AddSongs', { playlistId })
     }
 
     navigation.setOptions({
-      headerRight: () => <Button onPress={goToAddSongs} title="ADD SONGS" />
+      headerRight: () => <TextButton onPress={goToAddSongs} title="ADD SONGS" />
     })
   }, [navigation, playlistId])
 
-  const renderList = () =>
-    songs.map(({ id, name }, index) => {
-      // using a combination of index and song id to allow duplicate songs
-      const key = `${index}-${id}`
-
-      return (
-        <TouchableOpacity key={key} onPress={() => {}}>
-          <Text>{name}</Text>
-        </TouchableOpacity>
-      )
-    })
+  const getDarkenedColors = () => {
+    if (colors.length === 0) {
+      return color.background
+    } else {
+      return [...colors, '#000']
+    }
+  }
 
   return (
-    <>
-      <StatusBar barStyle="light-content" />
-      {renderList()}
-    </>
+    <Background colors={getDarkenedColors()}>
+      <Header title={name} />
+      <List data={songs} />
+    </Background>
   )
 }
 
-const styles = StyleSheet.create({})
-
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state: StoreState, props: PlaylistSceneProps) => {
   const { playlistId } = props.route.params
-  const songIds = getSongIdsOfPlaylist(state, playlistId)
+  const playlist = getPlaylist(state, playlistId)
+  const name = playlist.name
+  const colors = playlist.colors || []
+  const songIds = playlist.songIds || []
   const songs = getSongsWithIds(state, songIds)
-  console.log(playlistId, songIds, songs)
-  return { playlistId, songs }
+
+  return { playlistId, name, songs, colors }
 }
 
-const mapDispatchToProps = {}
+const connector = connect(mapStateToProps)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Playlist)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(Playlist)
