@@ -1,5 +1,5 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import rootReducer from './store/reducer'
 
 // redux types
@@ -48,3 +48,8 @@ export type PlaylistSceneProps = {
     StackNavigationProp<RootStackParamList>
   >
 }
+
+export type AddSongsSceneProps = StackScreenProps<
+  RootStackParamList,
+  'AddSongs'
+>

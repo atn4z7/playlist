@@ -13,7 +13,6 @@ const Home = ({ playlists }: PropsFromRedux) => {
   return (
     <Background>
       <StatusBar barStyle="light-content" />
-
       <Header title="Playlists" />
       <List data={playlists} />
     </Background>

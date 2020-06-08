@@ -1,24 +1,24 @@
 import React from 'react'
 import { View, SafeAreaView } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { color } from 'styles'
+import { getGradient } from 'styles'
 import styles from './styles'
 
 type BackgroundProps = {
-  colors: Array<string>
+  gradient: Array<string>
   children: React.ReactNode
 }
 
-const Background = ({ colors, children }: BackgroundProps) => {
+const Background = ({ gradient, children }: BackgroundProps) => {
   return (
     <View style={styles.container}>
-      <LinearGradient colors={colors} style={styles.background} />
+      <LinearGradient colors={gradient} style={styles.background} />
       <SafeAreaView>{children}</SafeAreaView>
     </View>
   )
 }
 Background.defaultProps = {
-  colors: color.background
+  gradient: getGradient()
 }
 
 export default Background

@@ -1,75 +1,85 @@
 import React, { useLayoutEffect, useState } from 'react'
-import {
-  StyleSheet,
-  StatusBar,
-  TouchableOpacity,
-  Text,
-  Button
-} from 'react-native'
 import { connect, ConnectedProps } from 'react-redux'
 import { playlistsActions } from 'actions'
-import { songsSelectors } from 'selectors'
+import { playlistsSelectors, songsSelectors } from 'selectors'
+import { AddSongsSceneProps, StoreState } from 'types'
+import { getGradient } from 'styles'
+import Background from 'views/common/Background'
+import Header from 'views/common/Header'
+import TextButton from 'views/common/TextButton'
+import { SelectableSongs } from 'views/common/Songs'
 
 const { addSongs } = playlistsActions
 const { getAllSongs } = songsSelectors
+const { getPlaylist } = playlistsSelectors
 
-const AddSongs = ({ navigation, playlistId, songs, addSongs }) => {
-  const [selected, setSelected] = useState({})
+type PlaylistProps = PropsFromRedux & AddSongsSceneProps
+
+type SelectedMap = {
+  [songId: string]: boolean
+}
+
+const initialState = {}
+
+const AddSongs = ({
+  navigation,
+  playlistId,
+  songs,
+  colors,
+  add
+}: PlaylistProps) => {
+  const [selected, setSelected] = useState<SelectedMap>(initialState)
 
   useLayoutEffect(() => {
-    console.log('useLayoutEffect')
     const onDonePressed = () => {
       const songIds = []
+
       for (const [id, isSelected] of Object.entries(selected)) {
         if (isSelected === true) {
           songIds.push(id)
         }
       }
       if (songIds.length > 0) {
-        addSongs({ playlistId, songIds })
+        add({ playlistId, songIds })
         navigation.goBack()
       }
     }
 
     navigation.setOptions({
-      headerRight: () => <Button onPress={onDonePressed} title="DONE" />
+      headerRight: () => <TextButton onPress={onDonePressed} title="DONE" />
     })
-  }, [navigation, playlistId, selected])
+  }, [navigation, add, playlistId, selected])
 
-  const onSongPressed = (id) => {
-    const updatedSelected = { ...selected, [id]: !selected[id] }
+  const onSongSelected = (songId: string) => {
+    const updatedSelected = { ...selected, [songId]: !selected[songId] }
     setSelected(updatedSelected)
   }
 
-  const renderList = () =>
-    songs.map(({ id, name }) => {
-      return (
-        <TouchableOpacity
-          style={{ flexDirection: 'row' }}
-          key={id}
-          onPress={() => onSongPressed(id)}>
-          <Text>{name}</Text>
-          {selected[id] ? <Text> selected</Text> : null}
-        </TouchableOpacity>
-      )
-    })
-
   return (
-    <>
-      <StatusBar barStyle="light-content" />
-      {renderList()}
-    </>
+    <Background gradient={getGradient(colors)}>
+      <Header title="Add Songs" />
+      <SelectableSongs
+        songs={songs}
+        selected={selected}
+        onSongSelected={onSongSelected}
+      />
+    </Background>
   )
 }
 
-const styles = StyleSheet.create({})
-
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state: StoreState, props: AddSongsSceneProps) => {
   const { playlistId } = props.route.params
+  const playlist = getPlaylist(state, playlistId)
+  const colors = playlist.colors || []
   const songs = getAllSongs(state)
-  return { playlistId, songs }
+
+  return { playlistId, songs, colors }
 }
 
-const mapDispatchToProps = { addSongs }
+const mapDispatchToProps = { add: addSongs }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSongs)
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(AddSongs)

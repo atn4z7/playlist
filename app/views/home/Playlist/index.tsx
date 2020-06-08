@@ -4,9 +4,9 @@ import { playlistsSelectors, songsSelectors } from 'selectors'
 import Background from 'views/common/Background'
 import TextButton from 'views/common/TextButton'
 import Header from 'views/common/Header'
-import { color } from 'styles'
+import { Songs } from 'views/common/Songs'
+import { getGradient } from 'styles'
 import { StoreState, PlaylistSceneProps } from 'types'
-import List from './List'
 
 const { getPlaylist } = playlistsSelectors
 const { getSongsWithIds } = songsSelectors
@@ -30,18 +30,10 @@ const Playlist = ({
     })
   }, [navigation, playlistId])
 
-  const getDarkenedColors = () => {
-    if (colors.length === 0) {
-      return color.background
-    } else {
-      return [...colors, '#000']
-    }
-  }
-
   return (
-    <Background colors={getDarkenedColors()}>
+    <Background gradient={getGradient(colors)}>
       <Header title={name} />
-      <List data={songs} />
+      <Songs songs={songs} />
     </Background>
   )
 }

@@ -4,6 +4,7 @@ import Home from 'views/home/Home'
 import Playlist from 'views/home/Playlist'
 import BackButton from 'views/common/BackButton'
 import { HomeStackParamList } from 'types'
+import { transparentHeaderOptions } from '../utils'
 
 const Stack = createStackNavigator<HomeStackParamList>()
 
@@ -13,17 +14,13 @@ const HomeNavigator = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{
-          headerTransparent: true,
-          headerTitle: ''
-        }}
+        options={transparentHeaderOptions}
       />
       <Stack.Screen
         name="Playlist"
         component={Playlist}
         options={{
-          headerTransparent: true,
-          headerTitle: '',
+          ...transparentHeaderOptions,
           headerLeft: BackButton
         }}
       />
