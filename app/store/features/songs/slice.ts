@@ -1,14 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { NormalizedObjects } from '../types'
+import { NormalizedObjects, Song } from 'types'
 
-type Song = {
-  id: string
-  name: string
-  artist: string
-  url: string
-}
-
-type SongsState = NormalizedObjects<Song>
+export type SongsState = NormalizedObjects<Song>
 
 const initialState: SongsState = {
   byId: {
@@ -28,8 +21,5 @@ const initialState: SongsState = {
 export default createSlice({
   name: 'songs',
   initialState,
-  reducers: {
-    increment: (state) => state
-    // decrement: (state) => state - 1,
-  }
+  reducers: {}
 })

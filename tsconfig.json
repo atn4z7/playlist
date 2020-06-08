@@ -42,6 +42,15 @@
       ],
       "selectors": [
         "./store/selectors"
+      ],
+      "styles": [
+        "./styles"
+      ],
+      "views": [
+        "./views"
+      ],
+      "types": [
+        "./types"
       ]
     },
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */

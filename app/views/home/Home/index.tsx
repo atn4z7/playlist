@@ -1,33 +1,31 @@
 import React from 'react'
-import { StyleSheet, StatusBar, TouchableOpacity, Text } from 'react-native'
+import { StatusBar, SafeAreaView } from 'react-native'
 import { connect } from 'react-redux'
+import Header from 'views/common/Header'
+import Background from 'views/common/Background'
 import { playlistsSelectors } from 'selectors'
+import { PlayList, StoreState } from 'types'
+import List from './List'
 
 const { getPlaylists } = playlistsSelectors
-const Home = ({ navigation, playlists }) => {
-  const goToPlaylist = (id) => {
-    navigation.navigate('Playlist', { playlistId: id })
-  }
-  const renderList = () =>
-    playlists.map(({ id, name }) => {
-      return (
-        <TouchableOpacity key={id} onPress={() => goToPlaylist(id)}>
-          <Text>{name}</Text>
-        </TouchableOpacity>
-      )
-    })
 
+type HomeProps = {
+  playlists: Array<PlayList>
+}
+
+const Home = ({ playlists }: HomeProps) => {
   return (
-    <>
+    <Background>
       <StatusBar barStyle="light-content" />
-      {renderList()}
-    </>
+      <SafeAreaView>
+        <Header title="Playlists" />
+        <List data={playlists} />
+      </SafeAreaView>
+    </Background>
   )
 }
 
-const styles = StyleSheet.create({})
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: StoreState) => ({
   playlists: getPlaylists(state)
 })
 

@@ -8,7 +8,13 @@ const Stack = createStackNavigator()
 const HomeNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerTransparent: true
+        }}
+      />
       <Stack.Screen name="Playlist" component={Playlist} />
     </Stack.Navigator>
   )

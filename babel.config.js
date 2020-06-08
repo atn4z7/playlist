@@ -18,7 +18,10 @@ module.exports = {
         ],
         alias: {
           actions: './app/store/actions',
-          selectors: './app/store/selectors'
+          selectors: './app/store/selectors',
+          styles: './app/styles',
+          views: './app/views',
+          types: './app/types'
         }
       }
     ]
