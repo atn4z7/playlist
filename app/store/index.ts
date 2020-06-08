@@ -14,11 +14,12 @@ import {
 } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage'
 import loggerMiddleware from 'redux-logger'
-import rootReducer from './reducers'
+import rootReducer from './reducer'
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage
+  storage: AsyncStorage,
+  blacklist: ['playlists', 'songs']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

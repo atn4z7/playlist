@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import playlists from './playlists'
-import songs from './songs'
+import playlists from './features/playlists'
+import songs from './features/songs'
 
 const rootReducer = combineReducers({
   playlists: playlists.reducer,
