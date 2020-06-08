@@ -20,6 +20,6 @@ export default StyleSheet.create({
   button: {
     color: color.text1,
     fontSize: font.size.s,
-    fontWeight: '400'
+    fontWeight: '500'
   }
 })

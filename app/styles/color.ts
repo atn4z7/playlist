@@ -2,7 +2,7 @@
 const black = '#000000'
 const white = '#ffffff'
 const white_87 = 'rgba(255, 255, 255, .87)'
-const gradient = ['#141E30', black]
+const default_gradient = ['#141E30', black]
 
 export const color = {
   text1: white,
@@ -14,10 +14,10 @@ export const color = {
 }
 
 export const getGradient = (colors?: Array<string>) => {
-  if (!colors || colors.length !== 0) {
-    return gradient
+  if (!colors || colors.length === 0) {
+    return default_gradient
   }
 
-  // add black to the gradient
+  // add black color to the gradient
   return [...colors, black]
 }
