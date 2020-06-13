@@ -1,5 +1,6 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../node_modules/react-native-unimodules/cocoapods'
 
 def add_flipper_pods!(versions = {})
   versions['Flipper'] ||= '~> 0.33.1'
@@ -77,6 +78,9 @@ target 'Playlist' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  
+  # Automatically detect installed unimodules using autolinking
+  use_unimodules!
   
   target 'PlaylistTests' do
     inherit! :complete

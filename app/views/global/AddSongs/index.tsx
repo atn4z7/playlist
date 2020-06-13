@@ -7,7 +7,7 @@ import { getGradient } from 'styles'
 import Background from 'views/common/Background'
 import Header from 'views/common/Header'
 import TextButton from 'views/common/TextButton'
-import { SelectableSongs } from 'views/common/Songs'
+import Demos from 'views/common/Demos'
 
 const { addSongs } = playlistsActions
 const { getAllSongs } = songsSelectors
@@ -39,10 +39,12 @@ const AddSongs = ({
           songIds.push(id)
         }
       }
+
       if (songIds.length > 0) {
         add({ playlistId, songIds })
-        navigation.goBack()
       }
+
+      navigation.goBack()
     }
 
     navigation.setOptions({
@@ -58,7 +60,7 @@ const AddSongs = ({
   return (
     <Background gradient={getGradient(colors)}>
       <Header title="Add Songs" />
-      <SelectableSongs
+      <Demos
         songs={songs}
         selected={selected}
         onSongSelected={onSongSelected}

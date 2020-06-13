@@ -4,7 +4,7 @@ import { playlistsSelectors, songsSelectors } from 'selectors'
 import Background from 'views/common/Background'
 import TextButton from 'views/common/TextButton'
 import Header from 'views/common/Header'
-import { Songs } from 'views/common/Songs'
+import Songs from 'views/common/Songs'
 import { getGradient } from 'styles'
 import { StoreState, PlaylistSceneProps } from 'types'
 

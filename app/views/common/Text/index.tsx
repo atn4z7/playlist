@@ -10,7 +10,11 @@ type TextProps = {
 
 const Text = ({ variation, children }: TextProps) => {
   const style = styles[variation]
-  return <RNText style={style}>{children}</RNText>
+  return (
+    <RNText style={style} numberOfLines={1}>
+      {children}
+    </RNText>
+  )
 }
 
 Text.defaultProps = {

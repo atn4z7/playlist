@@ -21,7 +21,8 @@ module.exports = {
           selectors: './app/store/selectors',
           styles: './app/styles',
           views: './app/views',
-          types: './app/types'
+          types: './app/types',
+          utils: './app/utils'
         }
       }
     ]
