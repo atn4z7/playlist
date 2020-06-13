@@ -1,7 +1,5 @@
-import playlists from './features/playlists'
-import songs from './features/songs'
+import { selectors as playlistsSelectors } from './features/playlists'
+import { selectors as songsSelectors } from './features/songs'
+import { selectors as currentSelectors } from './features/current'
 
-const playlistsSelectors = playlists.selectors
-const songsSelectors = songs.selectors
-
-export { playlistsSelectors, songsSelectors }
+export { playlistsSelectors, songsSelectors, currentSelectors }

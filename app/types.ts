@@ -8,6 +8,8 @@ export type NormalizedObjects<T> = {
   allIds: string[]
 }
 
+export type StoreState = ReturnType<typeof rootReducer>
+
 export type PlayList = {
   id: string
   name: string
@@ -22,8 +24,6 @@ export type Song = {
   artist: string
   url: string
 }
-
-export type StoreState = ReturnType<typeof rootReducer>
 
 // navigation types
 export type RootStackParamList = {

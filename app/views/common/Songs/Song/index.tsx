@@ -21,11 +21,9 @@ const Song = ({ data: { id, name, artist }, onPress }: SongProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity key={id} onPress={onPress}>
-        <View style={styles.leftContainer}>{renderInfo()}</View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity key={id} onPress={onPress} style={styles.container}>
+      {renderInfo()}
+    </TouchableOpacity>
   )
 }
 

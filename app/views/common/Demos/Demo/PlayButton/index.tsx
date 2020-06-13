@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 import { AVPlaybackStatus } from 'expo-av'
 import * as audio from 'utils/audio'
+import log from 'utils/logger'
 import styles from './styles'
 
 const playImg = require('../../../../../assets/images/play.png')
@@ -15,24 +16,14 @@ type PlayButtonProps = {
 }
 
 const PlayButton = ({ url, onPress, onFinish, isPlaying }: PlayButtonProps) => {
-  useEffect(() => {
-    return () => {
-      // stop playing on unmount
-      console.log('unmounting', isPlaying)
-      if (isPlaying) {
-        audio.stop()
-      }
-    }
-  }, [isPlaying])
-
   const onButtonPress = () => {
+    onPress()
+
     if (isPlaying) {
       audio.stop()
     } else {
       audio.play(url, onPlaybackStatusUpdate)
     }
-
-    onPress()
   }
 
   const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
@@ -42,7 +33,7 @@ const PlayButton = ({ url, onPress, onFinish, isPlaying }: PlayButtonProps) => {
       }
     } else {
       if (status.error) {
-        console.log(`FATAL PLAYER ERROR: ${status.error}`)
+        log(`player error: ${status.error}`)
       }
     }
   }

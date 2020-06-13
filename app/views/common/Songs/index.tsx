@@ -1,14 +1,21 @@
 import React from 'react'
 import { View, FlatList } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { Song as SongType } from 'types'
+import { currentActions } from 'actions'
 import Song from './Song'
 import styles from './styles'
 
 type SongsProps = {
   songs: Array<SongType>
+  playlistId: string
 }
 
-const Songs = ({ songs }: SongsProps) => {
+const { play } = currentActions
+
+const Songs = ({ songs, playlistId }: SongsProps) => {
+  const dispatch = useDispatch()
+
   const keyExtractor = (item: SongType, index: number) => {
     // using a combination of index and song id to allow duplicate songs
     return `${index}-${item.id}`
@@ -19,7 +26,11 @@ const Songs = ({ songs }: SongsProps) => {
   }
 
   const renderItem = ({ item }: { item: SongType }) => {
-    return <Song data={item} onPress={() => {}} />
+    const onPress = () => {
+      dispatch(play({ songId: item.id, playlistId }))
+    }
+
+    return <Song data={item} onPress={onPress} />
   }
 
   return (

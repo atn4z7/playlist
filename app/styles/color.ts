@@ -2,7 +2,7 @@
 const black = '#000000'
 const white = '#ffffff'
 const white_87 = 'rgba(255, 255, 255, .87)'
-const default_gradient = ['#141E30', black]
+const default_gradient = ['#323232', black]
 
 export const color = {
   text1: white,

@@ -1,7 +1,5 @@
-import playlists from './features/playlists'
-import songs from './features/songs'
+import { actions as playlistsActions } from './features/playlists'
+import { actions as songsActions } from './features/songs'
+import { actions as currentActions } from './features/current'
 
-const playlistsActions = playlists.actions
-const songsActions = songs.actions
-
-export { playlistsActions, songsActions }
+export { playlistsActions, songsActions, currentActions }

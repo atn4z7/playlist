@@ -33,7 +33,7 @@ const Playlist = ({
   return (
     <Background gradient={getGradient(colors)}>
       <Header title={name} />
-      <Songs songs={songs} />
+      <Songs songs={songs} playlistId={playlistId} />
     </Background>
   )
 }

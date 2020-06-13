@@ -18,8 +18,13 @@ const initialState: SongsState = {
   allIds: ['1', '2', '3', '4']
 }
 
-export default createSlice({
+const slice = createSlice({
   name: 'songs',
   initialState,
   reducers: {}
 })
+
+const actions = slice.actions
+const reducer = slice.reducer
+
+export { actions, reducer }

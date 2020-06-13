@@ -1,19 +1,12 @@
-import get from 'lodash/get'
-import { PlayList, StoreState } from 'types'
+import { StoreState } from 'types'
 
-const emptyArr: [] = []
 const emptyObj = {}
 
-export const getPlaylists = (state: StoreState): Array<PlayList> => {
-  const allIds = get(state, 'playlists.allIds', emptyArr)
-  return allIds.map((id: string) =>
-    get(state, `playlists.byId.${id}`, emptyObj)
-  )
+export const getPlaylists = (state: StoreState) => {
+  const allIds = state.songs.allIds
+  return allIds.map((id) => state.playlists.byId[id])
 }
 
-export const getPlaylist = (
-  state: StoreState,
-  playlistId: string
-): PlayList => {
-  return get(state, `playlists.byId.${playlistId}`, emptyObj)
+export const getPlaylist = (state: StoreState, playlistId: string) => {
+  return state.playlists.byId[playlistId] || emptyObj
 }

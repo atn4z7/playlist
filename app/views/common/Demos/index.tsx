@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, FlatList } from 'react-native'
-import { Song } from 'types'
+import { connect, ConnectedProps } from 'react-redux'
+import { currentActions } from 'actions'
+import { currentSelectors } from 'selectors'
+import { StoreState, Song } from 'types'
+import * as audio from 'utils/audio'
 import Demo from './Demo'
 import styles from './styles'
 
@@ -10,14 +14,38 @@ type DemosProps = {
   selected: {
     [songId: string]: boolean
   }
-}
+} & PropsFromRedux
 
-const Demos = ({ songs, onSongSelected, selected }: DemosProps) => {
+const { setIsPlaying } = currentActions
+const { getIsPlaying } = currentSelectors
+
+const Demos = ({
+  songs,
+  onSongSelected,
+  selected,
+  isGlobalPlaying,
+  setIsGlobalPlaying
+}: DemosProps) => {
   const [playingSongId, setPlayingSongId] = useState('')
+
+  useEffect(() => {
+    return () => {
+      // stop playing on unmount
+      if (playingSongId !== '') {
+        audio.reset()
+      }
+    }
+  }, [playingSongId])
 
   const keyExtractor = (item: Song, index: number) => {
     // using a combination of index and song id to allow duplicate songs
     return `${index}-${item.id}`
+  }
+
+  const stopGlobalPlaying = () => {
+    if (isGlobalPlaying) {
+      setIsGlobalPlaying(false)
+    }
   }
 
   const renderSeparator = () => {
@@ -34,6 +62,8 @@ const Demos = ({ songs, onSongSelected, selected }: DemosProps) => {
     }
 
     const onPlayPress = () => {
+      stopGlobalPlaying()
+
       if (isPlaying) {
         setPlayingSongId('')
       } else {
@@ -70,4 +100,17 @@ const Demos = ({ songs, onSongSelected, selected }: DemosProps) => {
   )
 }
 
-export default Demos
+const mapStateToProps = (state: StoreState) => {
+  const isGlobalPlaying = getIsPlaying(state)
+  return { isGlobalPlaying }
+}
+
+const mapDispatchToProps = {
+  setIsGlobalPlaying: setIsPlaying
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(Demos)

@@ -1,17 +1,16 @@
-import get from 'lodash/get'
-import { Song, StoreState } from 'types'
+import { StoreState } from 'types'
 
-const emptyArr: [] = []
 const emptyObj = {}
 
-export const getAllSongs = (state: StoreState): Array<Song> => {
-  const allIds = get(state, 'songs.allIds', emptyArr)
-  return allIds.map((id: string) => get(state, `songs.byId.${id}`, emptyObj))
+export const getAllSongs = (state: StoreState) => {
+  const allIds = state.songs.allIds
+  return allIds.map((id) => state.songs.byId[id])
 }
 
-export const getSongsWithIds = (
-  state: StoreState,
-  songIds: Array<string>
-): Array<Song> => {
-  return songIds.map((id) => get(state, `songs.byId.${id}`, emptyObj))
+export const getSongsWithIds = (state: StoreState, songIds: Array<string>) => {
+  return songIds.map((id) => state.songs.byId[id] || emptyObj)
+}
+
+export const getSongWithId = (state: StoreState, songId: string) => {
+  return state.songs.byId[songId] || emptyObj
 }
