@@ -5,7 +5,7 @@ import { getGradient } from 'styles'
 import styles from './styles'
 
 type BackgroundProps = {
-  gradient: Array<string>
+  gradient: string[]
   children: React.ReactNode
 }
 

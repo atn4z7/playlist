@@ -9,7 +9,7 @@ import Demo from './Demo'
 import styles from './styles'
 
 type DemosProps = {
-  songs: Array<Song>
+  songs: Song[]
   onSongSelected: (songId: string) => void
   selected: {
     [songId: string]: boolean
@@ -37,10 +37,7 @@ const Demos = ({
     }
   }, [playingSongId])
 
-  const keyExtractor = (item: Song, index: number) => {
-    // using a combination of index and song id to allow duplicate songs
-    return `${index}-${item.id}`
-  }
+  const keyExtractor = (item: Song) => item.id
 
   const stopGlobalPlaying = () => {
     if (isGlobalPlaying) {

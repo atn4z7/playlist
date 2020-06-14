@@ -2,12 +2,18 @@ import { StoreState } from 'types'
 
 const emptyObj = {}
 
-export const getAllSongs = (state: StoreState) => {
+export const getAllSongs = (state: StoreState, excludedSongIds?: string[]) => {
   const allIds = state.songs.allIds
-  return allIds.map((id) => state.songs.byId[id])
+  if (excludedSongIds && excludedSongIds.length > 0) {
+    return allIds
+      .filter((id) => !excludedSongIds.includes(id))
+      .map((id) => state.songs.byId[id])
+  } else {
+    return allIds.map((id) => state.songs.byId[id])
+  }
 }
 
-export const getSongsWithIds = (state: StoreState, songIds: Array<string>) => {
+export const getSongsWithIds = (state: StoreState, songIds: string[]) => {
   return songIds.map((id) => state.songs.byId[id] || emptyObj)
 }
 

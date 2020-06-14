@@ -5,8 +5,8 @@ import PlayButton from './PlayButton'
 import { Song } from 'types'
 import styles from './styles'
 
-const checkedImg = require('../../../../assets/images/checked.png')
-const uncheckedImg = require('../../../../assets/images/unchecked.png')
+const checkedImg = require('../../../../../assets/images/checked.png')
+const uncheckedImg = require('../../../../../assets/images/unchecked.png')
 
 type DemoProps = {
   data: Song
@@ -19,7 +19,7 @@ type DemoProps = {
 }
 
 const Demo = ({
-  data: { id, name, artist, url },
+  data: { name, artist, url },
   onSelected,
   onPlayPress,
   onFinish,
@@ -44,11 +44,9 @@ const Demo = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity key={id} onPress={onSelected}>
-        <View style={styles.leftContainer}>
-          {renderCheckBox()}
-          {renderInfo()}
-        </View>
+      <TouchableOpacity onPress={onSelected} style={styles.leftContainer}>
+        {renderCheckBox()}
+        {renderInfo()}
       </TouchableOpacity>
       <PlayButton
         url={url}

@@ -1,5 +1,6 @@
 import { eventChannel, buffers, SagaIterator, EventChannel } from 'redux-saga'
 import {
+  delay,
   call,
   select,
   put,
@@ -47,10 +48,13 @@ function* play({
     log('playing song', songId)
 
     const { url } = yield select(getSongWithId, songId)
+    yield put(setCurrent({ songId, playlistId }))
+
+    // debounce by 200ms before attempting to play
+    yield delay(200)
     const { durationMillis } = yield call(audio.play, url)
 
     yield put(setIsPlaying(true))
-    yield put(setCurrent({ songId, playlistId }))
     yield put(setDuration(durationMillis))
 
     yield spawn(trackStatus, songId)

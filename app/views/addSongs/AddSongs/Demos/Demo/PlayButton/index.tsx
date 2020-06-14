@@ -2,10 +2,11 @@ import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 import * as audio from 'utils/audio'
 import log from 'utils/logger'
+import { size } from 'styles'
 import styles from './styles'
 
-const playImg = require('../../../../../assets/images/play.png')
-const pauseImg = require('../../../../../assets/images/pause.png')
+const playImg = require('../../../../../../assets/images/play.png')
+const pauseImg = require('../../../../../../assets/images/pause.png')
 
 type PlayButtonProps = {
   url: string
@@ -54,7 +55,7 @@ const PlayButton = ({
   const buttonImg = isPlaying ? pauseImg : playImg
 
   return (
-    <TouchableOpacity onPress={onButtonPress}>
+    <TouchableOpacity onPress={onButtonPress} hitSlop={size.hitSlop}>
       <Image style={styles.buttonImg} source={buttonImg} />
     </TouchableOpacity>
   )

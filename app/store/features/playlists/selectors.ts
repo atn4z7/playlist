@@ -1,15 +1,19 @@
 import { StoreState } from 'types'
 
-const emptyObj = {}
 const emptyArr: [] = []
+const emptyStr = ''
 
 export const getPlaylists = (state: StoreState) => {
   const allIds = state.playlists.allIds
   return allIds.map((id) => state.playlists.byId[id])
 }
 
-export const getPlaylist = (state: StoreState, playlistId: string) => {
-  return state.playlists.byId[playlistId] || emptyObj
+export const getPlaylistColor = (state: StoreState, playlistId: string) => {
+  return state.playlists.byId[playlistId]?.colors || emptyArr
+}
+
+export const getPlaylistName = (state: StoreState, playlistId: string) => {
+  return state.playlists.byId[playlistId]?.name || emptyStr
 }
 
 export const getPlaylistSongIds = (state: StoreState, playlistId: string) => {

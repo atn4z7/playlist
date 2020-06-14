@@ -5,7 +5,7 @@ type PlayListsState = NormalizedObjects<PlayList>
 
 type AddSongsPayload = {
   playlistId: string
-  songIds: Array<string>
+  songIds: string[]
 }
 
 const initialState: PlayListsState = {

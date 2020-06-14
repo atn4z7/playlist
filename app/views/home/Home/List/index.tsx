@@ -5,7 +5,7 @@ import Item from './Item'
 import styles from './styles'
 
 type ListProps = {
-  data: Array<PlayList>
+  data: PlayList[]
 }
 
 const List = ({ data }: ListProps) => {

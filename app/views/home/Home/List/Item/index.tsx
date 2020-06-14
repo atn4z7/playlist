@@ -13,7 +13,7 @@ type ItemProps = {
   title: string
   description: string
   icon: string
-  colors: Array<string>
+  colors: string[]
 }
 
 const Item = ({ id, title, description, icon, colors }: ItemProps) => {

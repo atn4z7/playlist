@@ -13,9 +13,9 @@ export type StoreState = ReturnType<typeof rootReducer>
 export type PlayList = {
   id: string
   name: string
-  songIds: Array<string>
+  songIds: string[]
   icon: string
-  colors: Array<string>
+  colors: string[]
 }
 
 export type Song = {

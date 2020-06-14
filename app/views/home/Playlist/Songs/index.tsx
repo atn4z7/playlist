@@ -7,7 +7,7 @@ import Song from './Song'
 import styles from './styles'
 
 type SongsProps = {
-  songs: Array<SongType>
+  songs: SongType[]
   playlistId: string
 }
 
@@ -16,10 +16,7 @@ const { play } = currentActions
 const Songs = ({ songs, playlistId }: SongsProps) => {
   const dispatch = useDispatch()
 
-  const keyExtractor = (item: SongType, index: number) => {
-    // using a combination of index and song id to allow duplicate songs
-    return `${index}-${item.id}`
-  }
+  const keyExtractor = (item: SongType) => item.id
 
   const renderSeparator = () => {
     return <View style={styles.separator} />

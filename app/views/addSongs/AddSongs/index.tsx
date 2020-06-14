@@ -7,11 +7,11 @@ import { getGradient } from 'styles'
 import Background from 'views/common/Background'
 import Header from 'views/common/Header'
 import TextButton from 'views/common/TextButton'
-import Demos from 'views/common/Demos'
+import Demos from './Demos'
 
 const { addSongs } = playlistsActions
 const { getAllSongs } = songsSelectors
-const { getPlaylist } = playlistsSelectors
+const { getPlaylistColor, getPlaylistSongIds } = playlistsSelectors
 
 type PlaylistProps = PropsFromRedux & AddSongsSceneProps
 
@@ -71,9 +71,10 @@ const AddSongs = ({
 
 const mapStateToProps = (state: StoreState, props: AddSongsSceneProps) => {
   const { playlistId } = props.route.params
-  const playlist = getPlaylist(state, playlistId)
-  const colors = playlist.colors || []
-  const songs = getAllSongs(state)
+
+  const colors = getPlaylistColor(state, playlistId)
+  const excludedSongIds = getPlaylistSongIds(state, playlistId)
+  const songs = getAllSongs(state, excludedSongIds)
 
   return { playlistId, songs, colors }
 }

@@ -13,7 +13,7 @@ export const color = {
   icon: white
 }
 
-export const getGradient = (colors?: Array<string>) => {
+export const getGradient = (colors?: string[]) => {
   if (!colors || colors.length === 0) {
     return default_gradient
   }

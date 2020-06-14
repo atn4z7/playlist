@@ -4,7 +4,7 @@ import { dimension } from 'styles'
 const SPACE_HEIGHT = dimension.fullHeight * 0.003
 const CHECK_IMG_SIZE = dimension.fullWidth * 0.09
 const CHECK_IMG_MARGIN_RIGHT = dimension.fullWidth * 0.05
-const TEXT_CONTAINER_MAX_WIDTH = dimension.fullWidth * 0.64
+const TEXT_CONTAINER_MAX_WIDTH = dimension.fullWidth * 0.6
 export const ICON_SIZE = dimension.fullWidth * 0.1
 
 export default StyleSheet.create({
@@ -15,7 +15,8 @@ export default StyleSheet.create({
   },
   leftContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
   },
   infoContainer: {
     justifyContent: 'center',

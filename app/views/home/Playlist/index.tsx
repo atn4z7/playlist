@@ -4,11 +4,15 @@ import { playlistsSelectors, songsSelectors } from 'selectors'
 import Background from 'views/common/Background'
 import TextButton from 'views/common/TextButton'
 import Header from 'views/common/Header'
-import Songs from 'views/common/Songs'
+import Songs from './Songs'
 import { getGradient } from 'styles'
 import { StoreState, PlaylistSceneProps } from 'types'
 
-const { getPlaylist } = playlistsSelectors
+const {
+  getPlaylistName,
+  getPlaylistColor,
+  getPlaylistSongIds
+} = playlistsSelectors
 const { getSongsWithIds } = songsSelectors
 
 type PlaylistProps = PropsFromRedux & PlaylistSceneProps
@@ -40,10 +44,10 @@ const Playlist = ({
 
 const mapStateToProps = (state: StoreState, props: PlaylistSceneProps) => {
   const { playlistId } = props.route.params
-  const playlist = getPlaylist(state, playlistId)
-  const name = playlist.name
-  const colors = playlist.colors || []
-  const songIds = playlist.songIds || []
+
+  const name = getPlaylistName(state, playlistId)
+  const colors = getPlaylistColor(state, playlistId)
+  const songIds = getPlaylistSongIds(state, playlistId)
   const songs = getSongsWithIds(state, songIds)
 
   return { playlistId, name, songs, colors }
