@@ -3,7 +3,7 @@ import { StoreState } from 'types'
 const emptyObj = {}
 
 export const getPlaylists = (state: StoreState) => {
-  const allIds = state.songs.allIds
+  const allIds = state.playlists.allIds
   return allIds.map((id) => state.playlists.byId[id])
 }
 

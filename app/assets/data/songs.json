@@ -1,0 +1,107 @@
+{
+    "1": {
+        "id": "1",
+        "name": "Dance Monkey",
+        "artist": "Tones And I",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02c6f7af36ecdc3ed6e0a1f169",
+        "url": "https://p.scdn.co/mp3-preview/535ffea66207a0fc07d57fbaea7b5594be797f9b?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "2": {
+        "id": "2",
+        "name": "Say So",
+        "artist": "Doja Cat",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e0282b243023b937fd579a35533",
+        "url": "https://p.scdn.co/mp3-preview/1ddded6adc5b2f4e77088b793bd4e53123843f6c?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "3": {
+        "id": "3",
+        "name": "From the Ground Up",
+        "artist": "Dan + Shay",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02bd2de84891eed55a6a82368b",
+        "url": "https://p.scdn.co/mp3-preview/bc8fdd7a8711c0c4819025440f9f11bc71d25b43?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "4": {
+        "id": "4",
+        "name": "Best Part (feat. Daniel Caesar)",
+        "artist": "H.E.R.",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02b5d9c8de465654c20d77305c",
+        "url": "https://p.scdn.co/mp3-preview/863e2a899be2340af9b7d84432361d8b47433ba8?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "5": {
+        "id": "5",
+        "name": "Castle on the Hill",
+        "artist": "Ed Sheeran",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02ba5db46f4b838ef6027e6f96",
+        "url": "https://p.scdn.co/mp3-preview/beb4ed48cca5d2a792e877c7efe92d54046eac67?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "6": {
+        "id": "6",
+        "name": "Next to Me",
+        "artist": "Otto Knows",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02ca02f2ecba4a803b191c7eab",
+        "url": "https://p.scdn.co/mp3-preview/6f54e3aea34f14309be391624417fa6e4609e17f?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "7": {
+        "id": "7",
+        "name": "Physical",
+        "artist": "Dua Lipa",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02c966c2f4e08aee0442b6b8d6",
+        "url": "https://p.scdn.co/mp3-preview/2d8013cc528278684beb6a120c3655e3453d01ea?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "8": {
+        "id": "8",
+        "name": "Summer Days (Galantis Remix)",
+        "artist": "A R I Z O N A",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02116d31644b2284528e4f584d",
+        "url": "https://p.scdn.co/mp3-preview/faa85bf2dcbf9d4d1988f142302e11fdd449aba4?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "9": {
+        "id": "9",
+        "name": "Take on Me",
+        "artist": "a-ha",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02e8dd4db47e7177c63b0b7d53",
+        "url": "https://p.scdn.co/mp3-preview/0f980d0fac59f77123d0272b78bce97f1374d9e9?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "10": {
+        "id": "10",
+        "name": "Cough Syrup",
+        "artist": "Young the Giant",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e0251729fae66d02122c4951153",
+        "url": "https://p.scdn.co/mp3-preview/493f4f2e68ba182ece11f8107fa1edf81b330915?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "11": {
+        "id": "11",
+        "name": "Landslide",
+        "artist": "Fleetwood Mac",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e024fb043195e8d07e72edc7226",
+        "url": "https://p.scdn.co/mp3-preview/8f5c821de4d47066ac5e68d58fd180975c86530d?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "12": {
+        "id": "12",
+        "name": "Numb",
+        "artist": "Linkin Park",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02b4ad7ebaf4575f120eb3f193",
+        "url": "https://p.scdn.co/mp3-preview/e6ccf7717f8a167bfea4afc1bf7da1a0cd707fbb?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "13": {
+        "id": "13",
+        "name": "You Say",
+        "artist": "Lauren Daigle",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02cd78496a04942d36289e096d",
+        "url": "https://p.scdn.co/mp3-preview/fee562dc6727548fd4fd5d7d0280c47052ede307?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "14": {
+        "id": "14",
+        "name": "Dancing in the Moonlight",
+        "artist": "Toploader",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02e16a6534cd5a968a5b725d03",
+        "url": "https://p.scdn.co/mp3-preview/d4a0e1cd08839a722f4f2af160aabac07371ecd2?cid=774b29d4f13844c495f206cafdad9c86"
+    },
+    "15": {
+        "id": "15",
+        "name": "Leaving You",
+        "artist": "Audien",
+        "artwork": "https://i.scdn.co/image/ab67616d00001e02246c552a4f91af228ffbbfa7",
+        "url": "https://p.scdn.co/mp3-preview/1748ca9c03d1b630b56dcd524c93772cbb2f1672?cid=774b29d4f13844c495f206cafdad9c86"
+    }
+}

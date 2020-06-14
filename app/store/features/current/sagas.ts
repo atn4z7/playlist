@@ -22,14 +22,13 @@ const {
   setIsPlaying
 } = actions
 
-const url =
-  'https://p.scdn.co/mp3-preview/3eb16018c2a700240e9dfb8817b6f2d041f15eb1?cid=774b29d4f13844c495f206cafdad9c86'
 // WORKERS
 function* play({
   payload: { songId, playlistId }
 }: ReturnType<typeof playAction>) {
   try {
     log('playing song', songId)
+    const { url } = yield select(getSongWithId, songId)
     yield call(audio.play, url, null)
 
     yield put(setIsPlaying(true))
@@ -58,6 +57,7 @@ function* resume() {
       yield call(audio.resume)
     } else {
       const { songId } = yield select(getCurrent)
+      const { url } = yield select(getSongWithId, songId)
       //const currentSong = yield put(getSongWithId, songId)
       log('playing from beginning as song is not initiated')
       yield call(audio.play, url, null)
