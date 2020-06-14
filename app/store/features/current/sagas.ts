@@ -9,6 +9,7 @@ import {
   StrictEffect
 } from 'redux-saga/effects'
 import * as audio from 'utils/audio'
+import * as toast from 'utils/toast'
 import log from 'utils/logger'
 import { songsSelectors, playlistsSelectors } from 'selectors'
 import { actions } from './slice'
@@ -28,14 +29,15 @@ const {
   setDuration
 } = actions
 
-enum PositionState {
+enum IndexState {
   NotFound,
-  AtTheBeginning,
-  AtTheEnd,
-  InTheMiddle
+  OneAndOnly,
+  First,
+  Last,
+  InOfBounds
 }
 
-type SongPosition = { state: PositionState; index: number }
+type SongIndex = { state: IndexState; index: number }
 
 // WORKERS
 function* play({
@@ -113,13 +115,20 @@ function* pause(): SagaIterator {
 
 function* resume(): SagaIterator {
   try {
+    let shouldResume = false
     const isInitiated = yield call(audio.isInitiated)
-    const { positionMillis, durationMillis } = yield call(audio.getStatus)
 
-    const hasFinished =
-      Math.floor(positionMillis / 1000) === Math.floor(durationMillis / 1000)
+    if (isInitiated) {
+      const { positionMillis, durationMillis } = yield call(audio.getStatus)
+      const hasFinished =
+        Math.floor(positionMillis / 1000) === Math.floor(durationMillis / 1000)
 
-    if (isInitiated && !hasFinished) {
+      if (!hasFinished) {
+        shouldResume = true
+      }
+    }
+
+    if (shouldResume) {
       log('resuming song')
       yield call(audio.resume)
     } else {
@@ -137,59 +146,68 @@ function* resume(): SagaIterator {
   }
 }
 
-function* getSongPosition(
+function* getSongIndex(
   songId: string,
   songIds: string[]
-): Generator<StrictEffect, SongPosition, any> {
+): Generator<StrictEffect, SongIndex, any> {
   if (songIds.length === 0) {
     log('playlist has no songs')
-    return { state: PositionState.NotFound, index: -1 }
+    return { state: IndexState.NotFound, index: -1 }
+  }
+
+  if (songIds.length === 1) {
+    log('playlist has only 1 song')
+    return { state: IndexState.OneAndOnly, index: 0 }
   }
 
   const index = songIds.indexOf(songId)
 
   if (index === -1) {
     log('song is not in playlist')
-    return { state: PositionState.NotFound, index }
+    return { state: IndexState.NotFound, index }
   }
 
   if (index === 0) {
     log('song is the first song')
-    return { state: PositionState.AtTheBeginning, index }
+    return { state: IndexState.First, index }
   }
 
   if (index === songIds.length - 1) {
     log('song is the last song')
-    return { state: PositionState.AtTheEnd, index }
+    return { state: IndexState.Last, index }
   }
 
-  return { state: PositionState.InTheMiddle, index }
+  return { state: IndexState.InOfBounds, index }
 }
 
 function* next(): SagaIterator {
   try {
     const { songId, playlistId } = yield select(getCurrent)
     const songIds = yield select(getPlaylistSongIds, playlistId)
-    const { state, index }: SongPosition = yield call(
-      getSongPosition,
+    const { state, index }: SongIndex = yield call(
+      getSongIndex,
       songId,
       songIds
     )
 
     switch (state) {
-      case PositionState.AtTheEnd: {
+      case IndexState.OneAndOnly: {
+        yield call(toast.show, 'playlist only has one song')
+        break
+      }
+      case IndexState.Last: {
         const { isPlaying } = yield call(audio.getStatus)
 
         if (!isPlaying) {
           yield put(setIsPlaying(false))
-        } else {
-          // toast
         }
+
+        yield call(toast.show, 'end of playlist reached')
 
         break
       }
-      case PositionState.AtTheBeginning:
-      case PositionState.InTheMiddle: {
+      case IndexState.First:
+      case IndexState.InOfBounds: {
         log('playing next song')
         const nextSongId = songIds[index + 1]
         yield put(playAction({ songId: nextSongId, playlistId }))
@@ -204,20 +222,21 @@ function* previous(): SagaIterator {
   try {
     const { songId, playlistId } = yield select(getCurrent)
     const songIds = yield select(getPlaylistSongIds, playlistId)
-    const { state, index }: SongPosition = yield call(
-      getSongPosition,
+    const { state, index }: SongIndex = yield call(
+      getSongIndex,
       songId,
       songIds
     )
 
     switch (state) {
-      case PositionState.AtTheBeginning: {
+      case IndexState.OneAndOnly:
+      case IndexState.First: {
         log('reached beginning - replaying current song')
         yield put(playAction({ songId: songId, playlistId }))
         break
       }
-      case PositionState.AtTheEnd:
-      case PositionState.InTheMiddle: {
+      case IndexState.Last:
+      case IndexState.InOfBounds: {
         log('playing previous song')
         const nextSongId = songIds[index - 1]
         yield put(playAction({ songId: nextSongId, playlistId }))

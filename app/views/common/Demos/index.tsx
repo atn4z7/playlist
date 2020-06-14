@@ -61,18 +61,18 @@ const Demos = ({
       onSongSelected(id)
     }
 
+    const resetPlaying = () => {
+      setPlayingSongId('')
+    }
+
     const onPlayPress = () => {
       stopGlobalPlaying()
 
       if (isPlaying) {
-        setPlayingSongId('')
+        resetPlaying()
       } else {
         setPlayingSongId(id)
       }
-    }
-
-    const onFinish = () => {
-      setPlayingSongId('')
     }
 
     return (
@@ -80,7 +80,8 @@ const Demos = ({
         data={item}
         onSelected={onSelected}
         onPlayPress={onPlayPress}
-        onFinish={onFinish}
+        onFinish={resetPlaying}
+        onError={resetPlaying}
         isSelected={isSelected}
         isPlaying={isPlaying}
       />

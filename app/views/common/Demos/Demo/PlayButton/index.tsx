@@ -11,18 +11,30 @@ type PlayButtonProps = {
   url: string
   onPress: () => void
   onFinish: () => void
+  onError: () => void
   isPlaying: boolean
 }
 
-const PlayButton = ({ url, onPress, onFinish, isPlaying }: PlayButtonProps) => {
+const PlayButton = ({
+  url,
+  onPress,
+  onFinish,
+  onError,
+  isPlaying
+}: PlayButtonProps) => {
   const onButtonPress = async () => {
     onPress()
 
     if (isPlaying) {
       audio.stop()
     } else {
-      await audio.play(url)
-      audio.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
+      try {
+        await audio.play(url)
+        audio.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
+      } catch (error) {
+        log(`player error: ${error}`)
+        onError()
+      }
     }
   }
 
@@ -34,6 +46,7 @@ const PlayButton = ({ url, onPress, onFinish, isPlaying }: PlayButtonProps) => {
     } else {
       if (status.error) {
         log(`player error: ${status.error}`)
+        onError()
       }
     }
   }

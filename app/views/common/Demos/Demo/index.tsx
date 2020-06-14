@@ -13,6 +13,7 @@ type DemoProps = {
   onSelected: () => void
   onPlayPress: () => void
   onFinish: () => void
+  onError: () => void
   isSelected: boolean
   isPlaying: boolean
 }
@@ -22,6 +23,7 @@ const Demo = ({
   onSelected,
   onPlayPress,
   onFinish,
+  onError,
   isSelected,
   isPlaying
 }: DemoProps) => {
@@ -52,6 +54,7 @@ const Demo = ({
         url={url}
         onPress={onPlayPress}
         onFinish={onFinish}
+        onError={onError}
         isPlaying={isPlaying}
       />
     </View>
