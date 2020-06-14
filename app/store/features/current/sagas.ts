@@ -1,26 +1,46 @@
-import { eventChannel, buffers } from 'redux-saga'
-import { call, select, put, spawn, takeLatest, take } from 'redux-saga/effects'
+import { eventChannel, buffers, SagaIterator, EventChannel } from 'redux-saga'
+import {
+  call,
+  select,
+  put,
+  spawn,
+  takeLatest,
+  take,
+  StrictEffect
+} from 'redux-saga/effects'
 import * as audio from 'utils/audio'
 import log from 'utils/logger'
-import { songsSelectors } from 'selectors'
+import { songsSelectors, playlistsSelectors } from 'selectors'
 import { actions } from './slice'
 import { getCurrent } from './selectors'
 
+const { getPlaylistSongIds } = playlistsSelectors
 const { getSongWithId } = songsSelectors
 const {
   play: playAction,
   pause: pauseAction,
   resume: resumeAction,
+  next: nextAction,
+  previous: previousAction,
   setCurrent,
   setIsPlaying,
   setPosition,
   setDuration
 } = actions
 
+enum PositionState {
+  NotFound,
+  AtTheBeginning,
+  AtTheEnd,
+  InTheMiddle
+}
+
+type SongPosition = { state: PositionState; index: number }
+
 // WORKERS
 function* play({
   payload: { songId, playlistId }
-}: ReturnType<typeof playAction>) {
+}: ReturnType<typeof playAction>): SagaIterator {
   try {
     log('playing song', songId)
 
@@ -37,28 +57,34 @@ function* play({
   }
 }
 
-function* trackStatus(songId: string) {
+function* processStatus(
+  channel: EventChannel<any>,
+  status: audio.PlaybackStatus
+): SagaIterator {
+  if (!status.isLoaded) {
+    log('song being unloaded')
+    yield call(channel.close)
+  } else {
+    if (status.isPlaying) {
+      yield put(setPosition(status.positionMillis))
+    }
+
+    if (status.didJustFinish && !status.isLooping) {
+      log('finished playing song')
+      yield put(nextAction())
+      yield call(channel.close)
+    }
+  }
+}
+
+function* trackStatus(songId: string): SagaIterator {
   const channel = yield call(createStatusChannel)
+  log(`start tracking status for ${songId}`)
 
   try {
     while (true) {
-      log(`start tracking status for ${songId}`)
       const { status } = yield take(channel)
-
-      if (!status.isLoaded) {
-        log('song being unloaded')
-        yield call(channel.close)
-      } else {
-        if (status.isPlaying) {
-          yield put(setPosition(status.positionMillis))
-        }
-
-        if (status.didJustFinish && !status.isLooping) {
-          log('finished playing song and will stop')
-          yield call(channel.close)
-          // TODO play next song
-        }
-      }
+      yield call(processStatus, channel, status)
     }
   } finally {
     log(`stop tracking status for ${songId}`)
@@ -66,7 +92,7 @@ function* trackStatus(songId: string) {
 }
 
 function createStatusChannel() {
-  return eventChannel((emitter) => {
+  return eventChannel<{ status: audio.PlaybackStatus }>((emitter) => {
     audio.setOnPlaybackStatusUpdate((status) => {
       emitter({ status })
     })
@@ -75,7 +101,7 @@ function createStatusChannel() {
   }, buffers.expanding())
 }
 
-function* pause() {
+function* pause(): SagaIterator {
   try {
     log('pausing song')
     yield call(audio.pause)
@@ -85,15 +111,19 @@ function* pause() {
   }
 }
 
-function* resume() {
+function* resume(): SagaIterator {
   try {
     const isInitiated = yield call(audio.isInitiated)
+    const { positionMillis, durationMillis } = yield call(audio.getStatus)
 
-    if (isInitiated) {
+    const hasFinished =
+      Math.floor(positionMillis / 1000) === Math.floor(durationMillis / 1000)
+
+    if (isInitiated && !hasFinished) {
       log('resuming song')
       yield call(audio.resume)
     } else {
-      log('playing from beginning as song is not initiated')
+      log('playing from beginning as song is not initiated or has finished')
       const { songId } = yield select(getCurrent)
       const { url } = yield select(getSongWithId, songId)
 
@@ -107,15 +137,96 @@ function* resume() {
   }
 }
 
-// function* stop() {
-//   try {
-//     log('stopping song')
-//     yield call(audio.stop)
-//     yield put(setIsPlaying(false))
-//   } catch (error) {
-//     log('failed to stop song', error)
-//   }
-// }
+function* getSongPosition(
+  songId: string,
+  songIds: string[]
+): Generator<StrictEffect, SongPosition, any> {
+  if (songIds.length === 0) {
+    log('playlist has no songs')
+    return { state: PositionState.NotFound, index: -1 }
+  }
+
+  const index = songIds.indexOf(songId)
+
+  if (index === -1) {
+    log('song is not in playlist')
+    return { state: PositionState.NotFound, index }
+  }
+
+  if (index === 0) {
+    log('song is the first song')
+    return { state: PositionState.AtTheBeginning, index }
+  }
+
+  if (index === songIds.length - 1) {
+    log('song is the last song')
+    return { state: PositionState.AtTheEnd, index }
+  }
+
+  return { state: PositionState.InTheMiddle, index }
+}
+
+function* next(): SagaIterator {
+  try {
+    const { songId, playlistId } = yield select(getCurrent)
+    const songIds = yield select(getPlaylistSongIds, playlistId)
+    const { state, index }: SongPosition = yield call(
+      getSongPosition,
+      songId,
+      songIds
+    )
+
+    switch (state) {
+      case PositionState.AtTheEnd: {
+        const { isPlaying } = yield call(audio.getStatus)
+
+        if (!isPlaying) {
+          yield put(setIsPlaying(false))
+        } else {
+          // toast
+        }
+
+        break
+      }
+      case PositionState.AtTheBeginning:
+      case PositionState.InTheMiddle: {
+        log('playing next song')
+        const nextSongId = songIds[index + 1]
+        yield put(playAction({ songId: nextSongId, playlistId }))
+      }
+    }
+  } catch (error) {
+    log('failed to play next song', error)
+  }
+}
+
+function* previous(): SagaIterator {
+  try {
+    const { songId, playlistId } = yield select(getCurrent)
+    const songIds = yield select(getPlaylistSongIds, playlistId)
+    const { state, index }: SongPosition = yield call(
+      getSongPosition,
+      songId,
+      songIds
+    )
+
+    switch (state) {
+      case PositionState.AtTheBeginning: {
+        log('reached beginning - replaying current song')
+        yield put(playAction({ songId: songId, playlistId }))
+        break
+      }
+      case PositionState.AtTheEnd:
+      case PositionState.InTheMiddle: {
+        log('playing previous song')
+        const nextSongId = songIds[index - 1]
+        yield put(playAction({ songId: nextSongId, playlistId }))
+      }
+    }
+  } catch (error) {
+    log('failed to play previous song', error)
+  }
+}
 
 // WATCHERS
 function* watchPlay() {
@@ -130,12 +241,22 @@ function* watchResume() {
   yield takeLatest(resumeAction, resume)
 }
 
-// function* watchStop() {
-//   yield takeLatest(resumeAction, stop)
-// }
+function* watchNext() {
+  yield takeLatest(nextAction, next)
+}
+
+function* watchPrevious() {
+  yield takeLatest(previousAction, previous)
+}
 
 export default {
-  watchers: [watchPlay(), watchPause(), watchResume()],
+  watchers: [
+    watchPlay(),
+    watchPause(),
+    watchResume(),
+    watchNext(),
+    watchPrevious()
+  ],
   workers: {
     play
   }

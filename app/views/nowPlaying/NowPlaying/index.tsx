@@ -25,7 +25,9 @@ const NowPlaying = ({
   position,
   duration,
   pause,
-  resume
+  resume,
+  next,
+  previous
 }: NowPlayingProps) => {
   if (hasNeverPlayed) {
     return null
@@ -46,10 +48,10 @@ const NowPlaying = ({
         <Text variation="button">{isPlaying ? 'pause' : 'play'}</Text>
         <Text>{position + '/' + duration}</Text>
       </TouchableOpacity>
-      <TouchableOpacity hitSlop={size.hitSlop} onPress={onPress}>
+      <TouchableOpacity hitSlop={size.hitSlop} onPress={() => next()}>
         <Text variation="button">{'next'}</Text>
       </TouchableOpacity>
-      <TouchableOpacity hitSlop={size.hitSlop} onPress={onPress}>
+      <TouchableOpacity hitSlop={size.hitSlop} onPress={() => previous()}>
         <Text variation="button">{'previous'}</Text>
       </TouchableOpacity>
     </View>
@@ -70,7 +72,9 @@ const mapStateToProps = (state: StoreState) => {
 
 const mapDispatchToProps = {
   pause: currentActions.pause,
-  resume: currentActions.resume
+  resume: currentActions.resume,
+  next: currentActions.next,
+  previous: currentActions.previous
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

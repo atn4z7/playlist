@@ -52,9 +52,10 @@ const slice = createSlice({
 const play = createAction<PlayPayload>(`${name}/play`)
 const pause = createAction(`${name}/pause`)
 const resume = createAction(`${name}/resume`)
-const stop = createAction(`${name}/stop`)
+const next = createAction(`${name}/next`)
+const previous = createAction(`${name}/previous`)
 
-const actions = { ...slice.actions, play, pause, resume, stop }
+const actions = { ...slice.actions, play, pause, resume, next, previous }
 const reducer = slice.reducer
 
 export { actions, reducer }

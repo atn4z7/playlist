@@ -1,6 +1,8 @@
 import { Audio, AVPlaybackStatus } from 'expo-av'
 
-type OnPlaybackStatusUpdateType = (status: AVPlaybackStatus) => void
+export type PlaybackStatus = AVPlaybackStatus
+
+type OnPlaybackStatusUpdateType = (status: PlaybackStatus) => void
 
 let playbackInstance: Audio.Sound | null = null
 
@@ -27,24 +29,29 @@ export const setOnPlaybackStatusUpdate = async (
   onPlaybackStatusUpdate: OnPlaybackStatusUpdateType
 ) => {
   checkInstance()
-  //await playbackInstance?.setRateAsync(10)
+  //await playbackInstance?.setRateAsync(6)
   await playbackInstance?.setProgressUpdateIntervalAsync(1000)
   playbackInstance?.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
 }
 
 export const pause = () => {
   checkInstance()
-  playbackInstance?.pauseAsync()
+  return playbackInstance?.pauseAsync()
 }
 
 export const resume = () => {
   checkInstance()
-  playbackInstance?.playAsync()
+  return playbackInstance?.playAsync()
 }
 
 export const stop = () => {
   checkInstance()
-  playbackInstance?.stopAsync()
+  return playbackInstance?.stopAsync()
+}
+
+export const getStatus = () => {
+  checkInstance()
+  return playbackInstance?.getStatusAsync()
 }
 
 // unload the current media from memory and reset instance

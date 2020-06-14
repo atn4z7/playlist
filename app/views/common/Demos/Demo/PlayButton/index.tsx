@@ -1,6 +1,5 @@
 import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
-import { AVPlaybackStatus } from 'expo-av'
 import * as audio from 'utils/audio'
 import log from 'utils/logger'
 import styles from './styles'
@@ -16,17 +15,18 @@ type PlayButtonProps = {
 }
 
 const PlayButton = ({ url, onPress, onFinish, isPlaying }: PlayButtonProps) => {
-  const onButtonPress = () => {
+  const onButtonPress = async () => {
     onPress()
 
     if (isPlaying) {
       audio.stop()
     } else {
-      audio.play(url, onPlaybackStatusUpdate)
+      await audio.play(url)
+      audio.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
     }
   }
 
-  const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+  const onPlaybackStatusUpdate = (status: audio.PlaybackStatus) => {
     if (status.isLoaded) {
       if (status.didJustFinish && !status.isLooping) {
         onFinish()
