@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { RootStackParamList } from 'types'
 import AddSongs from 'views/addSongs/AddSongs'
+import NowPlaying from 'views/nowPlaying/NowPlaying'
 import BackButton from 'views/common/BackButton'
 import HomeNavigator from '../HomeNavigator'
 import { transparentHeaderOptions } from '../utils'
@@ -21,6 +22,14 @@ const RootNavigator = () => {
         <Stack.Screen
           name="AddSongs"
           component={AddSongs}
+          options={{
+            ...transparentHeaderOptions,
+            headerLeft: BackButton
+          }}
+        />
+        <Stack.Screen
+          name="NowPlaying"
+          component={NowPlaying}
           options={{
             ...transparentHeaderOptions,
             headerLeft: BackButton

@@ -4,6 +4,8 @@ type CurrentState = {
   songId: string
   playlistId: string
   isPlaying: boolean
+  positionMillis: number
+  durationMillis: number
 }
 
 type SetCurrentPayload = {
@@ -19,7 +21,9 @@ type PlayPayload = {
 const initialState: CurrentState = {
   songId: '',
   playlistId: '',
-  isPlaying: false
+  isPlaying: false,
+  positionMillis: 0,
+  durationMillis: 0
 }
 
 const name = 'current'
@@ -35,6 +39,12 @@ const slice = createSlice({
     },
     setIsPlaying(state, action: PayloadAction<boolean>) {
       state.isPlaying = action.payload
+    },
+    setPosition(state, action: PayloadAction<number>) {
+      state.positionMillis = action.payload
+    },
+    setDuration(state, action: PayloadAction<number>) {
+      state.durationMillis = action.payload
     }
   }
 })

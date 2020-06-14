@@ -1,12 +1,5 @@
-import {
-  call,
-  select,
-  put,
-  fork,
-  takeLatest,
-  delay,
-  takeEvery
-} from 'redux-saga/effects'
+import { eventChannel, buffers } from 'redux-saga'
+import { call, select, put, spawn, takeLatest, take } from 'redux-saga/effects'
 import * as audio from 'utils/audio'
 import log from 'utils/logger'
 import { songsSelectors } from 'selectors'
@@ -19,7 +12,9 @@ const {
   pause: pauseAction,
   resume: resumeAction,
   setCurrent,
-  setIsPlaying
+  setIsPlaying,
+  setPosition,
+  setDuration
 } = actions
 
 // WORKERS
@@ -28,14 +23,56 @@ function* play({
 }: ReturnType<typeof playAction>) {
   try {
     log('playing song', songId)
+
     const { url } = yield select(getSongWithId, songId)
-    yield call(audio.play, url, null)
+    const { durationMillis } = yield call(audio.play, url)
 
     yield put(setIsPlaying(true))
     yield put(setCurrent({ songId, playlistId }))
+    yield put(setDuration(durationMillis))
+
+    yield spawn(trackStatus, songId)
   } catch (error) {
     log('failed to play song', error)
   }
+}
+
+function* trackStatus(songId: string) {
+  const channel = yield call(createStatusChannel)
+
+  try {
+    while (true) {
+      log(`start tracking status for ${songId}`)
+      const { status } = yield take(channel)
+
+      if (!status.isLoaded) {
+        log('song being unloaded')
+        yield call(channel.close)
+      } else {
+        if (status.isPlaying) {
+          yield put(setPosition(status.positionMillis))
+        }
+
+        if (status.didJustFinish && !status.isLooping) {
+          log('finished playing song and will stop')
+          yield call(channel.close)
+          // TODO play next song
+        }
+      }
+    }
+  } finally {
+    log(`stop tracking status for ${songId}`)
+  }
+}
+
+function createStatusChannel() {
+  return eventChannel((emitter) => {
+    audio.setOnPlaybackStatusUpdate((status) => {
+      emitter({ status })
+    })
+
+    return () => {}
+  }, buffers.expanding())
 }
 
 function* pause() {
@@ -56,11 +93,12 @@ function* resume() {
       log('resuming song')
       yield call(audio.resume)
     } else {
+      log('playing from beginning as song is not initiated')
       const { songId } = yield select(getCurrent)
       const { url } = yield select(getSongWithId, songId)
-      //const currentSong = yield put(getSongWithId, songId)
-      log('playing from beginning as song is not initiated')
-      yield call(audio.play, url, null)
+
+      yield call(audio.play, url)
+      yield spawn(trackStatus, songId)
     }
 
     yield put(setIsPlaying(true))

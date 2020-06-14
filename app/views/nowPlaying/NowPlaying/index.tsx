@@ -1,15 +1,14 @@
 import React from 'react'
-import { View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { connect, ConnectedProps } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
 import { size } from 'styles'
 import Text from 'views/common/Text'
-import { StoreState, HomeNavigationProps } from 'types'
+import { StoreState } from 'types'
 import { currentActions } from 'actions'
 import { currentSelectors, songsSelectors } from 'selectors'
 import styles from './styles'
 
-type NowPlayingBarProps = PropsFromRedux
+type NowPlayingProps = PropsFromRedux
 
 const {
   getCurrent,
@@ -19,7 +18,7 @@ const {
 } = currentSelectors
 const { getSongWithId } = songsSelectors
 
-const NowPlayingBar = ({
+const NowPlaying = ({
   hasNeverPlayed,
   currentSong,
   isPlaying,
@@ -27,18 +26,12 @@ const NowPlayingBar = ({
   duration,
   pause,
   resume
-}: NowPlayingBarProps) => {
-  const navigation = useNavigation<HomeNavigationProps>()
-
+}: NowPlayingProps) => {
   if (hasNeverPlayed) {
     return null
   }
 
-  const onViewPress = () => {
-    navigation.navigate('NowPlaying')
-  }
-
-  const onPlayPress = () => {
+  const onPress = () => {
     if (isPlaying) {
       pause()
     } else {
@@ -47,20 +40,19 @@ const NowPlayingBar = ({
   }
 
   return (
-    <TouchableWithoutFeedback onPress={onViewPress}>
-      <View style={styles.container}>
-        <View>
-          <Text>{currentSong.name}</Text>
-          <Text>{position + '/' + duration}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          hitSlop={size.hitSlop}
-          onPress={onPlayPress}>
-          <Text variation="button">{isPlaying ? 'pause' : 'play'}</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+    <View style={styles.container}>
+      <Text>{currentSong.name}</Text>
+      <TouchableOpacity hitSlop={size.hitSlop} onPress={onPress}>
+        <Text variation="button">{isPlaying ? 'pause' : 'play'}</Text>
+        <Text>{position + '/' + duration}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity hitSlop={size.hitSlop} onPress={onPress}>
+        <Text variation="button">{'next'}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity hitSlop={size.hitSlop} onPress={onPress}>
+        <Text variation="button">{'previous'}</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 
@@ -85,4 +77,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-export default connector(NowPlayingBar)
+export default connector(NowPlaying)

@@ -30,6 +30,7 @@ export type Song = {
 export type RootStackParamList = {
   Home: undefined
   AddSongs: { playlistId: string }
+  NowPlaying: undefined
 }
 
 export type HomeStackParamList = {

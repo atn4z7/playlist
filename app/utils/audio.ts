@@ -1,33 +1,35 @@
 import { Audio, AVPlaybackStatus } from 'expo-av'
 
-type OnPlaybackStatusUpdateType = (status: AVPlaybackStatus) => void | null
+type OnPlaybackStatusUpdateType = (status: AVPlaybackStatus) => void
 
 let playbackInstance: Audio.Sound | null = null
-
-export const play = async (
-  uri: string,
-  onPlaybackStatusUpdate: OnPlaybackStatusUpdateType
-) => {
-  if (playbackInstance !== null) {
-    reset()
-  }
-
-  const source = { uri }
-  const initialStatus = { shouldPlay: true }
-
-  const { sound } = await Audio.Sound.createAsync(
-    source,
-    initialStatus,
-    onPlaybackStatusUpdate
-  )
-
-  playbackInstance = sound
-}
 
 const checkInstance = () => {
   if (playbackInstance === null) {
     throw new Error('playback not initiated')
   }
+}
+
+export const play = async (uri: string) => {
+  if (playbackInstance !== null) {
+    await reset()
+  }
+
+  playbackInstance = new Audio.Sound()
+  const source = { uri }
+  const initialStatus = { shouldPlay: true }
+  const status = await playbackInstance.loadAsync(source, initialStatus)
+
+  return status
+}
+
+export const setOnPlaybackStatusUpdate = async (
+  onPlaybackStatusUpdate: OnPlaybackStatusUpdateType
+) => {
+  checkInstance()
+  //await playbackInstance?.setRateAsync(10)
+  await playbackInstance?.setProgressUpdateIntervalAsync(1000)
+  playbackInstance?.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
 }
 
 export const pause = () => {
