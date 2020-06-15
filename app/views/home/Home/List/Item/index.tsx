@@ -26,7 +26,7 @@ const Item = ({ id, title, description, icon, colors }: ItemProps) => {
   const renderIcon = () => {
     return (
       <LinearGradient colors={colors} style={styles.iconBg}>
-        <MaterialIcons name={icon} size={ICON_SIZE} color={color.icon} />
+        <MaterialIcons name={icon} size={ICON_SIZE} color={color.accent} />
       </LinearGradient>
     )
   }

@@ -10,7 +10,8 @@ import { getGradient } from 'styles'
 import Text from 'views/common/Text'
 import Background from 'views/common/Background'
 import PlayButton from 'views/common/PlayButton'
-import styles from './styles'
+import TimeTracker from 'views/common/TimeTracker'
+import styles, { TRACKER_WIDTH } from './styles'
 
 type NowPlayingProps = PropsFromRedux
 
@@ -83,8 +84,15 @@ const NowPlaying = ({
   const renderTracker = () => {
     return (
       <View style={styles.trackerContainer}>
-        <Text variation="caption">{formatTime(position)}</Text>
-        <Text>{formatTime(duration)}</Text>
+        <TimeTracker
+          position={position}
+          duration={duration}
+          width={TRACKER_WIDTH}
+        />
+        <View style={styles.timeContainer}>
+          <Text variation="caption">{formatTime(position)}</Text>
+          <Text>{formatTime(duration)}</Text>
+        </View>
       </View>
     )
   }

@@ -197,10 +197,15 @@ function* next(): SagaIterator {
     switch (state) {
       case IndexState.OneAndOnly:
       case IndexState.Last: {
-        const { isPlaying } = yield call(audio.getStatus)
+        const isInitiated = yield call(audio.isInitiated)
 
-        if (!isPlaying) {
-          yield put(setIsPlaying(false))
+        if (isInitiated) {
+          const { isPlaying } = yield call(audio.getStatus)
+
+          if (!isPlaying) {
+            // player has finished playing all songs
+            yield put(setIsPlaying(false))
+          }
         }
 
         yield call(toast.show, 'end of playlist reached')

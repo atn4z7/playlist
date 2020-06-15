@@ -12,7 +12,8 @@ import { currentActions } from 'actions'
 import { currentSelectors, songsSelectors } from 'selectors'
 import PlayButton from 'views/common/PlayButton'
 import Text from 'views/common/Text'
-import styles from './styles'
+import TimeTracker from 'views/common/TimeTracker'
+import styles, { TRACKER_WIDTH } from './styles'
 
 type NowPlayingBarProps = PropsFromRedux
 
@@ -65,15 +66,22 @@ const NowPlayingBar = ({
   return (
     <TouchableWithoutFeedback onPress={onViewPress}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.infoContainer}>
-          <Image source={{ uri: artwork }} style={styles.artwork} />
-          {renderInfo()}
-        </View>
-        <PlayButton
-          onPress={onPlayPress}
-          isPlaying={isPlaying}
-          style={styles.playButton}
+        <TimeTracker
+          position={position}
+          duration={duration}
+          width={TRACKER_WIDTH}
         />
+        <View style={styles.bodyContainer}>
+          <View style={styles.infoContainer}>
+            <Image source={{ uri: artwork }} style={styles.artwork} />
+            {renderInfo()}
+          </View>
+          <PlayButton
+            onPress={onPlayPress}
+            isPlaying={isPlaying}
+            style={styles.playButton}
+          />
+        </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   )

@@ -5,12 +5,14 @@ const HEADER_MARGIN_TOP = dimension.fullHeight * 0.013
 const ARTWORK_SIZE = dimension.fullWidth * 0.8
 const VERTICAL_SPACE_HEIGHT = dimension.fullHeight * 0.027
 const HORIZONTAL_SPACE_HEIGHT = dimension.fullWidth * 0.12
-const TRACKER_WIDTH = ARTWORK_SIZE
 const CONTROLS_WIDTH = dimension.fullWidth * 0.6
 const CONTROLS_HEIGHT = dimension.fullHeight * 0.24
 const PLAY_BTN_SIZE = dimension.fullWidth * 0.19
 const NEXT_BTN_WIDTH = dimension.fullWidth * 0.05
 const NEXT_BTN_HEIGHT = (NEXT_BTN_WIDTH * 108) / 114
+const TIME_MARGIN_TOP = dimension.fullHeight * 0.007
+
+export const TRACKER_WIDTH = ARTWORK_SIZE
 
 export default StyleSheet.create({
   container: {
@@ -39,9 +41,12 @@ export default StyleSheet.create({
     width: HORIZONTAL_SPACE_HEIGHT
   },
   trackerContainer: {
-    width: TRACKER_WIDTH,
+    width: TRACKER_WIDTH
+  },
+  timeContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop: TIME_MARGIN_TOP
   },
   songInfoContainer: {
     alignItems: 'center',
