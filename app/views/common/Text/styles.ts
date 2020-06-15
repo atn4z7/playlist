@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
-import { color, font } from 'styles'
+import { color, font, dimension } from 'styles'
+
+const BODY_MARGIN_BOTTOM = dimension.fullHeight * 0.003
 
 export default StyleSheet.create({
   headline: {
@@ -10,7 +12,8 @@ export default StyleSheet.create({
   body: {
     color: color.text1,
     fontSize: font.size.l,
-    fontWeight: '500'
+    fontWeight: '500',
+    marginBottom: BODY_MARGIN_BOTTOM
   },
   caption: {
     color: color.text2,

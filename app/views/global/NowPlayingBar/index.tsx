@@ -57,7 +57,6 @@ const NowPlayingBar = ({
     return (
       <View style={styles.textContainer}>
         <Text variation="body">{name}</Text>
-        <View style={styles.space} />
         <Text variation="caption">{artist}</Text>
       </View>
     )

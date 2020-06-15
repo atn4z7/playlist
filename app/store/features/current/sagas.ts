@@ -14,7 +14,7 @@ import * as toast from 'utils/toast'
 import log from 'utils/logger'
 import { songsSelectors, playlistsSelectors } from 'selectors'
 import { actions } from './slice'
-import { getCurrent } from './selectors'
+import { getCurrent, getSongDuration, getPlaybackPosition } from './selectors'
 
 const { getPlaylistSongIds } = playlistsSelectors
 const { getSongWithId } = songsSelectors
@@ -123,9 +123,9 @@ function* resume(): SagaIterator {
     const isInitiated = yield call(audio.isInitiated)
 
     if (isInitiated) {
-      const { positionMillis, durationMillis } = yield call(audio.getStatus)
-      const hasFinished =
-        Math.floor(positionMillis / 1000) === Math.floor(durationMillis / 1000)
+      const position = yield select(getPlaybackPosition)
+      const duration = yield select(getSongDuration)
+      const hasFinished = position === duration
 
       if (!hasFinished) {
         shouldResume = true
@@ -195,10 +195,7 @@ function* next(): SagaIterator {
     )
 
     switch (state) {
-      case IndexState.OneAndOnly: {
-        yield call(toast.show, 'playlist only has one song')
-        break
-      }
+      case IndexState.OneAndOnly:
       case IndexState.Last: {
         const { isPlaying } = yield call(audio.getStatus)
 

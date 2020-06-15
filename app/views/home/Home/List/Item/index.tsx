@@ -35,7 +35,6 @@ const Item = ({ id, title, description, icon, colors }: ItemProps) => {
     return (
       <View style={styles.infoContainer}>
         <Text variation="body">{title}</Text>
-        <View style={styles.space} />
         <Text variation="caption">{description}</Text>
       </View>
     )

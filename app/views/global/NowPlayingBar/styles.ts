@@ -3,7 +3,6 @@ import { dimension, color } from 'styles'
 
 const WIDTH = dimension.fullWidth
 const HEIGHT = dimension.fullHeight * 0.14
-const SPACE_HEIGHT = dimension.fullHeight * 0.003
 const ARTWORK_SIZE = dimension.fullHeight * 0.07
 const ARTWORK_MARGIN_HORIZONTAL = dimension.fullWidth * 0.05
 const TEXT_CONTAINER_MAX_WIDTH = dimension.fullWidth * 0.5
@@ -34,9 +33,6 @@ export default StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'center'
-  },
-  space: {
-    height: SPACE_HEIGHT
   },
   playButton: {
     marginRight: PLAY_BTN_MARGIN_RIGHT,

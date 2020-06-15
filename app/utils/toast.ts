@@ -4,7 +4,7 @@ import Toast from 'react-native-root-toast'
 
 const options = {
   duration: Toast.durations.SHORT,
-  position: -160,
+  position: Toast.positions.CENTER,
   shadow: false,
   animation: true,
   hideOnPress: false,

@@ -32,7 +32,6 @@ const Demo = ({
     return (
       <View style={styles.infoContainer}>
         <Text variation="body">{name}</Text>
-        <View style={styles.space} />
         <Text variation="caption">{artist}</Text>
       </View>
     )

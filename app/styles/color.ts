@@ -1,5 +1,6 @@
 // common colors
 const black = '#000000'
+const black_40 = 'rgba(0, 0, 0, .4)'
 const white = '#ffffff'
 const white_87 = 'rgba(255, 255, 255, .87)'
 const mine_shaft = '#323232'
@@ -12,7 +13,8 @@ export const color = {
 
   // misc
   //androidStatusBar: gallery,
-  icon: white
+  icon: white,
+  shadow: black_40
 }
 
 export const getGradient = (colors?: string[]) => {
