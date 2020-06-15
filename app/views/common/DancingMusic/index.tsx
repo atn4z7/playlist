@@ -8,7 +8,13 @@ const animation = require('../../../assets/animations/floating-music.json')
 const DancingMusic = () => {
   return (
     <View style={styles.container}>
-      <LottieView autoPlay source={animation} loop style={styles.animation} />
+      <LottieView
+        resizeMode="cover"
+        autoPlay
+        source={animation}
+        loop
+        style={styles.animation}
+      />
     </View>
   )
 }
