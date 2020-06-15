@@ -33,6 +33,7 @@ const Songs = ({ songs, playlistId }: SongsProps) => {
   return (
     <FlatList
       style={styles.container}
+      contentContainerStyle={styles.contentContainer}
       data={songs}
       renderItem={renderItem}
       keyExtractor={keyExtractor}

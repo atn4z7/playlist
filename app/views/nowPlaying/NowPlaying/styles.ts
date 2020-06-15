@@ -3,7 +3,7 @@ import { color, dimension } from 'styles'
 
 const HEADER_MARGIN_TOP = dimension.fullHeight * 0.013
 const ARTWORK_SIZE = dimension.fullWidth * 0.8
-const VERTICAL_SPACE_HEIGHT = dimension.fullHeight * 0.05
+const VERTICAL_SPACE_HEIGHT = dimension.fullHeight * 0.027
 const HORIZONTAL_SPACE_HEIGHT = dimension.fullWidth * 0.12
 const TRACKER_WIDTH = ARTWORK_SIZE
 const CONTROLS_WIDTH = dimension.fullWidth * 0.6
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     shadowRadius: 4,
     shadowColor: color.shadow,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 3
+    elevation: 5
   },
   artwork: {
     height: ARTWORK_SIZE,
