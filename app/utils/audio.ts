@@ -29,7 +29,6 @@ export const setOnPlaybackStatusUpdate = async (
   onPlaybackStatusUpdate: OnPlaybackStatusUpdateType
 ) => {
   checkInstance()
-  //await playbackInstance?.setRateAsync(6)
   await playbackInstance?.setProgressUpdateIntervalAsync(1000)
   playbackInstance?.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
 }

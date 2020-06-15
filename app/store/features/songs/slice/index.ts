@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { NormalizedObjects, Song } from 'types'
 
-const songs = require('../../../assets/data/songs.json')
+const songs = require('../../../../assets/data/songs.json')
 
 export type SongsState = NormalizedObjects<Song>
 
