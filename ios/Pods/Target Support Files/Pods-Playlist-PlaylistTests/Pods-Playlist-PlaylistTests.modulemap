@@ -1,0 +1,6 @@
+module Pods_Playlist_PlaylistTests {
+  umbrella header "Pods-Playlist-PlaylistTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

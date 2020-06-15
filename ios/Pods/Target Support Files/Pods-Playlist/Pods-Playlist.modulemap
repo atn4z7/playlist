@@ -1,0 +1,6 @@
+module Pods_Playlist {
+  umbrella header "Pods-Playlist-umbrella.h"
+
+  export *
+  module * { export * }
+}
