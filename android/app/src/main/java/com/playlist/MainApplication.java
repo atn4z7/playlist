@@ -1,10 +1,5 @@
 package com.playlist;
 
-import com.playlist.generated.BasePackageList;
-
-import org.unimodules.adapters.react.ModuleRegistryAdapter;
-import org.unimodules.adapters.react.ReactModuleRegistryProvider;
-
 import android.app.Application;
 import android.content.Context;
 
@@ -19,7 +14,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
+import com.playlist.generated.BasePackageList;
+
+import com.facebook.react.config.ReactFeatureFlags;
+
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+
 public class MainApplication extends Application implements ReactApplication {
+    // react-native-reanimated integration
+    static {
+        ReactFeatureFlags.useTurboModules = true; // <- add
+    }
+
     private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
     private final ReactNativeHost mReactNativeHost =
             new ReactNativeHost(this) {
@@ -45,6 +55,11 @@ public class MainApplication extends Application implements ReactApplication {
                 @Override
                 protected String getJSMainModuleName() {
                     return "index";
+                }
+
+                @Override
+                protected JSIModulePackage getJSIModulePackage() {
+                    return new ReanimatedJSIModulePackage();
                 }
             };
 

@@ -5406,6 +5406,13 @@ react-native-linear-gradient@^2.5.6:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
 
+react-native-reanimated@^2.0.0-alpha.1:
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.0.0-alpha.1.tgz#d8d451aeb8e31b59e36664749a2c00c736c981e9"
+  integrity sha512-nNYO+lX0xKfeXKLoGQZtJIAcEt3JV4OD94/oQJZlqBhVUgfCkLFXB9yiPgcVHNp9BHefmdI2lBbJfWmmWVNZQg==
+  dependencies:
+    fbjs "^1.0.0"
+
 react-native-root-siblings@^4.0.0:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-4.0.6.tgz#6dd7eedb725faacd7ba19c159dd279cf2e6d8476"
