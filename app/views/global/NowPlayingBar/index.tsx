@@ -1,12 +1,17 @@
 import React from 'react'
-import { View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import {
+  View,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  Image
+} from 'react-native'
 import { connect, ConnectedProps } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { size } from 'styles'
-import Text from 'views/common/Text'
 import { StoreState, HomeNavigationProps } from 'types'
 import { currentActions } from 'actions'
 import { currentSelectors, songsSelectors } from 'selectors'
+import PlayButton from 'views/common/PlayButton'
+import Text from 'views/common/Text'
 import styles from './styles'
 
 type NowPlayingBarProps = PropsFromRedux
@@ -34,6 +39,8 @@ const NowPlayingBar = ({
     return null
   }
 
+  const { name, artist, artwork } = currentSong
+
   const onViewPress = () => {
     navigation.navigate('NowPlaying')
   }
@@ -46,20 +53,29 @@ const NowPlayingBar = ({
     }
   }
 
+  const renderInfo = () => {
+    return (
+      <View style={styles.textContainer}>
+        <Text variation="body">{name}</Text>
+        <View style={styles.space} />
+        <Text variation="caption">{artist}</Text>
+      </View>
+    )
+  }
+
   return (
     <TouchableWithoutFeedback onPress={onViewPress}>
-      <View style={styles.container}>
-        <View>
-          <Text>{currentSong.name}</Text>
-          <Text>{position + '/' + duration}</Text>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.infoContainer}>
+          <Image source={{ uri: artwork }} style={styles.artwork} />
+          {renderInfo()}
         </View>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          hitSlop={size.hitSlop}
-          onPress={onPlayPress}>
-          <Text variation="button">{isPlaying ? 'pause' : 'play'}</Text>
-        </TouchableOpacity>
-      </View>
+        <PlayButton
+          onPress={onPlayPress}
+          isPlaying={isPlaying}
+          style={styles.playButton}
+        />
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   )
 }

@@ -4,7 +4,6 @@ import {
 } from '@reduxjs/toolkit'
 import {
   persistStore,
-  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -12,19 +11,10 @@ import {
   PURGE,
   REGISTER
 } from 'redux-persist'
-import AsyncStorage from '@react-native-community/async-storage'
 import createSagaMiddleware from 'redux-saga'
 import loggerMiddleware from 'redux-logger'
 import rootReducer from './reducer'
 import rootSaga from './sagas'
-
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-  blacklist: ['playlists', 'songs', 'current']
-}
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware()
@@ -39,7 +29,7 @@ export default function configureStore() {
   })
 
   const store = RTKconfigureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: [...defaultMiddleware, loggerMiddleware, sagaMiddleware]
   })
 

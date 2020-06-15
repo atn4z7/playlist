@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity, Image } from 'react-native'
 import Text from 'views/common/Text'
-import PlayButton from './PlayButton'
+import PlayButton from 'views/common/PlayButton'
 import { Song } from 'types'
 import styles from './styles'
 
@@ -12,18 +12,14 @@ type DemoProps = {
   data: Song
   onSelected: () => void
   onPlayPress: () => void
-  onFinish: () => void
-  onError: () => void
   isSelected: boolean
   isPlaying: boolean
 }
 
 const Demo = ({
-  data: { name, artist, url },
+  data: { name, artist },
   onSelected,
   onPlayPress,
-  onFinish,
-  onError,
   isSelected,
   isPlaying
 }: DemoProps) => {
@@ -48,13 +44,7 @@ const Demo = ({
         {renderCheckBox()}
         {renderInfo()}
       </TouchableOpacity>
-      <PlayButton
-        url={url}
-        onPress={onPlayPress}
-        onFinish={onFinish}
-        onError={onError}
-        isPlaying={isPlaying}
-      />
+      <PlayButton onPress={onPlayPress} isPlaying={isPlaying} />
     </View>
   )
 }

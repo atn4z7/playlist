@@ -19,7 +19,6 @@ export default StyleSheet.create({
   space: {
     height: SPACE_HEIGHT
   },
-
   artwork: {
     height: ARTWORK_SIZE,
     width: ARTWORK_SIZE,

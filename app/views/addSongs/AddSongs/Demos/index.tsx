@@ -5,6 +5,7 @@ import { currentActions } from 'actions'
 import { currentSelectors } from 'selectors'
 import { StoreState, Song } from 'types'
 import * as audio from 'utils/audio'
+import log from 'utils/logger'
 import Demo from './Demo'
 import styles from './styles'
 
@@ -50,7 +51,7 @@ const Demos = ({
   }
 
   const renderItem = ({ item }: { item: Song }) => {
-    const id = item.id
+    const { id, url } = item
     const isSelected = selected[item.id]
     const isPlaying = item.id === playingSongId
 
@@ -62,13 +63,34 @@ const Demos = ({
       setPlayingSongId('')
     }
 
-    const onPlayPress = () => {
-      stopGlobalPlaying()
+    const onPlaybackStatusUpdate = (status: audio.PlaybackStatus) => {
+      if (status.isLoaded) {
+        if (status.didJustFinish && !status.isLooping) {
+          resetPlaying()
+        }
+      } else {
+        if (status.error) {
+          log(`player error: ${status.error}`)
+          resetPlaying()
+        }
+      }
+    }
 
+    const onPlayPress = async () => {
       if (isPlaying) {
         resetPlaying()
+        audio.stop()
       } else {
+        stopGlobalPlaying()
+
         setPlayingSongId(id)
+        try {
+          await audio.play(url)
+          audio.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
+        } catch (error) {
+          log(`player error: ${error}`)
+          resetPlaying()
+        }
       }
     }
 
@@ -77,8 +99,6 @@ const Demos = ({
         data={item}
         onSelected={onSelected}
         onPlayPress={onPlayPress}
-        onFinish={resetPlaying}
-        onError={resetPlaying}
         isSelected={isSelected}
         isPlaying={isPlaying}
       />
