@@ -3,6 +3,7 @@ import { View, FlatList } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { Song as SongType } from 'types'
 import { currentActions } from 'actions'
+import Empty from './Empty'
 import Song from './Song'
 import styles from './styles'
 
@@ -38,7 +39,7 @@ const Songs = ({ songs, playlistId }: SongsProps) => {
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ItemSeparatorComponent={renderSeparator}
-      scrollEnabled={true}
+      ListEmptyComponent={Empty}
     />
   )
 }
