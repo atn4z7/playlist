@@ -48,7 +48,7 @@ const slice = createSlice({
   reducers: {
     addSongs(state, action: PayloadAction<AddSongsPayload>) {
       const { playlistId, songIds } = action.payload
-      state.byId[playlistId].songIds.push(...songIds)
+      state.byId[playlistId]?.songIds?.push(...songIds)
     }
   }
 })

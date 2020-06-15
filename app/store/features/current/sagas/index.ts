@@ -13,8 +13,8 @@ import * as audio from 'utils/audio'
 import * as toast from 'utils/toast'
 import log from 'utils/logger'
 import { songsSelectors, playlistsSelectors } from 'selectors'
-import { actions } from './slice'
-import { getCurrent, getSongDuration, getPlaybackPosition } from './selectors'
+import { actions } from '../slice'
+import { getCurrent, getSongDuration, getPlaybackPosition } from '../selectors'
 
 const { getPlaylistSongIds } = playlistsSelectors
 const { getSongWithId } = songsSelectors

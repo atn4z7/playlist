@@ -1,36 +1,25 @@
-import {
-  configureStore as RTKconfigureStore,
-  getDefaultMiddleware
-} from '@reduxjs/toolkit'
-import {
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER
-} from 'redux-persist'
-import createSagaMiddleware from 'redux-saga'
+import { configureStore as RTKconfigureStore } from '@reduxjs/toolkit'
+import { persistStore } from 'redux-persist'
+import createSagaMiddleware, { SagaMiddleware } from 'redux-saga'
 import loggerMiddleware from 'redux-logger'
 import rootReducer from './reducer'
 import rootSaga from './sagas'
 
+const getMiddleWare = (sagaMiddleware: SagaMiddleware<object>) => {
+  if (__DEV__) {
+    return [loggerMiddleware, sagaMiddleware]
+  } else {
+    return [sagaMiddleware]
+  }
+}
+
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware()
-
-  const defaultMiddleware = getDefaultMiddleware({
-    thunk: false,
-    // temp solution to make redux-persist work with redux toolkit
-    // https://github.com/rt2zz/redux-persist/issues/988#issuecomment-552242978
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    }
-  })
+  const middleware = getMiddleWare(sagaMiddleware)
 
   const store = RTKconfigureStore({
     reducer: rootReducer,
-    middleware: [...defaultMiddleware, loggerMiddleware, sagaMiddleware]
+    middleware
   })
 
   const persistor = persistStore(store)
