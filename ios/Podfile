@@ -79,6 +79,9 @@ target 'Playlist' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   
+  pod 'lottie-ios', :path => '../node_modules/lottie-ios'
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+  
   # Automatically detect installed unimodules using autolinking
   use_unimodules!
   
