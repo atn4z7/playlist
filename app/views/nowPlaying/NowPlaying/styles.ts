@@ -3,12 +3,12 @@ import { color, dimension } from 'styles'
 
 const HEADER_MARGIN_TOP = dimension.fullHeight * 0.013
 const ARTWORK_SIZE = dimension.fullWidth * 0.8
-const SPACE_HEIGHT = dimension.fullHeight * 0.05
+const VERTICAL_SPACE_HEIGHT = dimension.fullHeight * 0.05
+const HORIZONTAL_SPACE_HEIGHT = dimension.fullWidth * 0.12
 const TRACKER_WIDTH = ARTWORK_SIZE
 const CONTROLS_WIDTH = dimension.fullWidth * 0.6
 const CONTROLS_HEIGHT = dimension.fullHeight * 0.24
 const PLAY_BTN_SIZE = dimension.fullWidth * 0.19
-const PLAY_BTN_MARGIN_HORIZONTAL = dimension.fullWidth * 0.12
 const NEXT_BTN_WIDTH = dimension.fullWidth * 0.05
 const NEXT_BTN_HEIGHT = (NEXT_BTN_WIDTH * 108) / 114
 
@@ -32,8 +32,11 @@ export default StyleSheet.create({
     height: ARTWORK_SIZE,
     width: ARTWORK_SIZE
   },
-  space: {
-    height: SPACE_HEIGHT
+  verticalSpace: {
+    height: VERTICAL_SPACE_HEIGHT
+  },
+  horizontalSpace: {
+    width: HORIZONTAL_SPACE_HEIGHT
   },
   trackerContainer: {
     width: TRACKER_WIDTH,
@@ -53,8 +56,7 @@ export default StyleSheet.create({
   },
   playButton: {
     height: PLAY_BTN_SIZE,
-    width: PLAY_BTN_SIZE,
-    marginHorizontal: PLAY_BTN_MARGIN_HORIZONTAL
+    width: PLAY_BTN_SIZE
   },
   nextButton: {
     height: NEXT_BTN_HEIGHT,

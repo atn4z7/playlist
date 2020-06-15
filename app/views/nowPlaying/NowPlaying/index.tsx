@@ -70,7 +70,9 @@ const NowPlaying = ({
     )
   }
 
-  const renderSpace = () => <View style={styles.space} />
+  const renderVerticalSpace = () => <View style={styles.verticalSpace} />
+
+  const renderHorizontalSpace = () => <View style={styles.horizontalSpace} />
 
   const formatTime = (seconds: number) => {
     return moment
@@ -115,11 +117,13 @@ const NowPlaying = ({
     return (
       <View style={styles.controlsContainer}>
         {renderTransitionBtn(goToPreviousSong, styles.prevButton)}
+        {renderHorizontalSpace()}
         <PlayButton
           onPress={onPlayPress}
           isPlaying={isPlaying}
           style={styles.playButton}
         />
+        {renderHorizontalSpace()}
         {renderTransitionBtn(goToNextSong, styles.nextButton)}
       </View>
     )
@@ -129,11 +133,11 @@ const NowPlaying = ({
     <Background gradient={getGradient(colors)}>
       <View style={styles.container}>
         {renderHeader()}
-        {renderSpace()}
+        {renderVerticalSpace()}
         {renderArtwork()}
-        {renderSpace()}
+        {renderVerticalSpace()}
         {renderTracker()}
-        {renderSpace()}
+        {renderVerticalSpace()}
         {renderSongInfo()}
         {renderControls()}
       </View>

@@ -24,8 +24,7 @@ export default StyleSheet.create({
     height: ARTWORK_SIZE,
     width: ARTWORK_SIZE,
     marginHorizontal: ARTWORK_MARGIN_HORIZONTAL,
-    borderRadius: 4,
-    backgroundColor: 'blue'
+    borderRadius: 4
   },
   textContainer: {
     maxWidth: TEXT_CONTAINER_MAX_WIDTH
