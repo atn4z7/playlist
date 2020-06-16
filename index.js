@@ -11,5 +11,6 @@ YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps'])
 YellowBox.ignoreWarnings(['Warning: componentWillMount'])
 YellowBox.ignoreWarnings(['Unable to find module for UIManager'])
 YellowBox.ignoreWarnings(['useNativeDriver'])
+YellowBox.ignoreWarnings(['LottieAnimation'])
 
 AppRegistry.registerComponent(appName, () => App)
