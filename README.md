@@ -11,7 +11,8 @@ There are 2 ways to build and run the app locally:
 -   **Via official IDEs**: Xcode (iOS), Android Studio (Android)
 -   **Via command line**: `yarn ios` and `yarn android`
 
-If you have an Android device, you can also install the release apk file to try out the app.
+If you have an Android device, you can also install the release [apk file](https://github.com/anguyen1817/playlist/raw/master/files/app-release.apk) to try out the app.
+
 # Features
 ## Current
 
@@ -37,14 +38,20 @@ If you have an Android device, you can also install the release apk file to try 
 
 
 # Prototype design
-**Figma prototype**: [link](https://www.figma.com/proto/MWj45afi0fp4QjDcNmSdZ0/Playlist?node-id=0%3A2&scaling=scale-down)	
+**Figma prototype**
+
+https://www.figma.com/proto/MWj45afi0fp4QjDcNmSdZ0/Playlist?node-id=0%3A2&scaling=scale-down
 
 **Sketch screenshot**
+
+<img src="https://github.com/anguyen1817/playlist/blob/master/files/sketch-screenshot.png?raw=true" width="800" />
+
 # Demo video
-**Link**: https://vimeo.com/429460227
+https://vimeo.com/429460227
+
 # Some technical details
 ## Code structure
- **app** folder contains all JS code
+1/ **app** folder contains all JS code
 
  - **assets**: contains images, animations,...
  - **navigators**: contains navigation logic via react-navigation 
@@ -60,7 +67,7 @@ If you have an Android device, you can also install the release apk file to try 
 	 - global components (like the Mini Now Playing Bar)  are in **global** folder
 
       
-**Some path aliases** to quickly access things: 
+2/ **Some path aliases** to quickly access things: 
 
 - **"actions"**: allows access to all redux actions
 - **"selectors"**: allows access to all redux selectors
@@ -76,6 +83,9 @@ If you have an Android device, you can also install the release apk file to try 
 - **"utils"**: allows access to all the utils
 
 ## Navigation system
+
+<img src="https://github.com/anguyen1817/playlist/blob/master/files/navigation.png?raw=true" width="800" />
+
 
 ## State management & side effects
 
