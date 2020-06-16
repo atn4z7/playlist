@@ -44,14 +44,14 @@ https://www.figma.com/proto/MWj45afi0fp4QjDcNmSdZ0/Playlist?node-id=0%3A2&scalin
 
 **Sketch screenshot**
 
-<img src="https://github.com/anguyen1817/playlist/blob/master/files/sketch-screenshot.png?raw=true" width="800" />
+<img src="https://github.com/anguyen1817/playlist/blob/master/files/sketch-screenshot.png?raw=true" width="900" />
 
 # Demo video
 https://vimeo.com/429460227
 
 # Some technical details
 ## Code structure
-1/ **app** folder contains all JS code
+1/ **All JS code resides in app folder**
 
  - **assets**: contains images, animations,...
  - **navigators**: contains navigation logic via react-navigation 
@@ -67,14 +67,8 @@ https://vimeo.com/429460227
 	 - global components (like the Mini Now Playing Bar)  are in **global** folder
 
       
-2/ **Some path aliases** to quickly access things: 
+2/ **There are path aliases to quickly access things**
 
-- **"actions"**: allows access to all redux actions
-- **"selectors"**: allows access to all redux selectors
-- **"styles"**: allows access to the app design system
-- **"views"**: allows access to all the view components
-- **"types"**: allows access to global typescript types
-- **"utils"**: allows access to all the utils
 - **"actions"**: allows access to all redux actions
 - **"selectors"**: allows access to all redux selectors
 - **"styles"**: allows access to the app design system
@@ -84,12 +78,12 @@ https://vimeo.com/429460227
 
 ## Navigation system
 
-<img src="https://github.com/anguyen1817/playlist/blob/master/files/navigation.png?raw=true" width="800" />
+<img src="https://github.com/anguyen1817/playlist/blob/master/files/navigation.png?raw=true" width="900" />
 
 
 ## State management & side effects
 
-The app uses a combination of [redux](https://redux.js.org/ "https://redux.js.org/"), [redux saga](https://redux-saga.js.org/ "https://redux-saga.js.org/") and [react hooks](https://reactjs.org/docs/hooks-intro.html "https://reactjs.org/docs/hooks-intro.html") depends on the situation. For example, sagas are used to control music playback so that the logic is not coupled to any single UI component and can be triggered from anywhere.
+The app uses a combination of [redux](https://redux.js.org/ "https://redux.js.org/"), [redux saga](https://redux-saga.js.org/ "https://redux-saga.js.org/") and [react hooks](https://reactjs.org/docs/hooks-intro.html "https://reactjs.org/docs/hooks-intro.html") depending on the situation. For example, sagas are used to control music playback so that the logic is not coupled to any single UI component and can be triggered from anywhere.
 
 ## Unit testing
 
