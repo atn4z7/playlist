@@ -54,23 +54,23 @@ https://www.figma.com/proto/MWj45afi0fp4QjDcNmSdZ0/Playlist?node-id=0%3A2&scalin
 
 ```
 .
-├── assets                        # images, animations
-├── navigators                    # navigation system
-├── store                         # redux store and reducers, actions and sagas (grouped by features)
-├── styles                        # design system: color, font, size, dimension
-├── utils                         # uitlities: audio, logger, toast
-└── views                         # all UI components (grouped by navigation routes)
+├── assets              # images, animations & hardcoded song data (from Spotify API)
+├── navigators          # navigation system
+├── store               # redux store and reducers, actions, sagas (grouped by features)
+├── styles              # design system: color, font, size, dimension
+├── utils               # utilities: audio, logger, toast
+└── views               # UI components (grouped by navigation routes)
 ```
       
 #### path aliases
 
 ```
-actions              # redux actions
-selectors            # redux selectors
-styles               # design system
-views                # UI components
-types                # global typescript types
-utils                # utilities
+actions                 # redux actions
+selectors               # redux selectors
+styles                  # design system
+views                   # UI components
+types                   # global typescript types
+utils                   # utilities
 ```
 
 ## Dependencies
