@@ -1,10 +1,10 @@
 # Getting started
 
-## Install app dependencies
+### Install app dependencies
 
 In root folder, run `yarn install`
 
-## Run The App
+### Run The App
 
 There are 2 ways to build and run the app locally:
 
@@ -14,7 +14,7 @@ There are 2 ways to build and run the app locally:
 If you have an Android device, you can also install the release [apk file](https://github.com/anguyen1817/playlist/raw/master/files/app-release.apk) to try out the app.
 
 # Features
-## Current
+### Current
 
 - View playlists
 - View songs of a playlist
@@ -26,7 +26,7 @@ If you have an Android device, you can also install the release [apk file](https
 - View currently playing song and control it (play/pause/next/previous) via the fullscreen "Now Playing"
 - Playlists, songs as well as last played song are persisted throughout app session
 
-## Future enhancements
+### Future enhancements
 
 - Seek bar  
 - Playing queue
@@ -36,48 +36,53 @@ If you have an Android device, you can also install the release [apk file](https
 - Artwork color extraction (so background matches song)
 - Beat/Tempo visualizers
 
+# App Demo
+https://vimeo.com/429460227
 
 # Prototype design
-**Figma prototype**
+### Figma prototype
 
 https://www.figma.com/proto/MWj45afi0fp4QjDcNmSdZ0/Playlist?node-id=0%3A2&scaling=scale-down
 
-**Sketch screenshot**
+### Sketch screenshot
 
 <img src="https://github.com/anguyen1817/playlist/blob/master/files/sketch-screenshot.png?raw=true" width="900" />
 
-# Demo video
-https://vimeo.com/429460227
-
-# Some technical details
+# Technical details
 ## Code structure
-1/ **All JS code resides in app folder**
+#### app folder
 
- - **assets**: contains images, animations,...
- - **navigators**: contains navigation logic via react-navigation 
- - **store**: 
-	 - contains redux store logic
-	 - reducers, actions, sagas are grouped by **features**
- - **styles**: contains app design system (color, font, dimension, size,...)
- - **utils**: contains utilities such as audio, logger,...
- - **views**: 
-	 - contains all UI components
-	 - they are grouped by **navigation routes**
-	 - reusable components are in **common** folder
-	 - global components (like the Mini Now Playing Bar)  are in **global** folder
-
+```
+.
+├── assets                        # images, animations
+├── navigators                    # navigation system
+├── store                         # redux store and reducers, actions and sagas (grouped by features)
+├── styles                        # design system: color, font, size, dimension
+├── utils                         # uitlities: audio, logger, toast
+└── views                         # all UI components (grouped by navigation routes)
+```
       
-2/ **There are path aliases to quickly access things**
+#### path aliases
 
-- **"actions"**: allows access to all redux actions
-- **"selectors"**: allows access to all redux selectors
-- **"styles"**: allows access to the app design system
-- **"views"**: allows access to all the view components
-- **"types"**: allows access to global typescript types
-- **"utils"**: allows access to all the utils
+```
+actions              # redux actions
+selectors            # redux selectors
+styles               # design system
+views                # UI components
+types                # global typescript types
+utils                # utilities
+```
+
+## Dependencies
+
+#### media playback: [expo-av](https://docs.expo.io/versions/latest/sdk/av/)
+
+#### animation: [lottie-react-native](https://airbnb.io/lottie/#/README), [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/)
+
+#### navigation: [react-navigation](https://reactnavigation.org/)
+
 
 ## Navigation system
-
 <img src="https://github.com/anguyen1817/playlist/blob/master/files/navigation.png?raw=true" width="900" />
 
 
